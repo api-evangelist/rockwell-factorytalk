@@ -1,19 +1,73 @@
 aid: rockwell-factorytalk
 url: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml
 apis:
-- aid: rockwell-factorytalk:rockwell-factorytalk-api
-  name: Rockwell Automation FactoryTalk API
+- aid: rockwell-factorytalk:factorytalk-optix-rest-api
+  name: Rockwell FactoryTalk Optix REST API
   tags:
   - Manufacturing
   - Automation
-  - OPC-UA
-  - PLC
-  - SCADA
+  - HMI
+  - REST
   image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
-  humanURL: https://www.rockwellautomation.com/
+  humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   properties:
-  - url: https://www.rockwellautomation.com/
+  - url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
     type: Documentation
   description: >-
-    Rockwell Automation FactoryTalk provides industrial automation APIs for production line monitoring, PLC programming, SCADA visualization, and MES integration. REST and OPC-UA APIs enable access to production data, alarm events, and equipment performance metrics.
+    Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications.
+
+- aid: rockwell-factorytalk:factorytalk-hub-api
+  name: Rockwell FactoryTalk Hub API
+  tags:
+  - Manufacturing
+  - Automation
+  - Cloud
+  - REST
+  image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+  humanURL: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+  baseURL: https://api.factorytalk.example.com
+  properties:
+  - url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+    type: Documentation
+  description: >-
+    Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk software applications, enabling centralized identity management, software licensing, and connected factory services.
+
+- aid: rockwell-factorytalk:logix-designer-api
+  name: Rockwell FactoryTalk Logix Designer API
+  tags:
+  - Manufacturing
+  - Automation
+  - PLC
+  - Programming
+  - REST
+  image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+  humanURL: https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
+  baseURL: https://api.factorytalk.example.com
+  properties:
+  - url: https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
+    type: Documentation
+  - url: https://github.com/rockwellautomation/ra-logix-cicd
+    type: SDKs
+  description: >-
+    Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller programming, allowing version control integration, CI/CD pipeline automation, and export of L5X controller files for PLC program management.
+
+common:
+- url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+  type: Portal
+- url: https://docs.rockwellautomation.com/en/products/software/factorytalk/
+  type: Documentation
+- url: https://www.rockwellautomation.com/en-us/
+  type: Website
+- url: https://www.rockwellautomation.com/en-us/support/
+  type: Support
+- url: https://www.rockwellautomation.com/en-us/company/news/blogs/
+  type: Blog
+- url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html
+  type: PrivacyPolicy
+- url: https://github.com/rockwellautomation
+  type: GitHubOrganization
+maintainers:
+- name: Kin Lane
+  email: kin@apievangelist.com
+modified: '2026-03-18'
