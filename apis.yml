@@ -1,0 +1,19 @@
+aid: rockwell-factorytalk
+url: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml
+apis:
+- aid: rockwell-factorytalk:rockwell-factorytalk-api
+  name: Rockwell Automation FactoryTalk API
+  tags:
+  - Manufacturing
+  - Automation
+  - OPC-UA
+  - PLC
+  - SCADA
+  image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+  humanURL: https://www.rockwellautomation.com/
+  baseURL: https://api.factorytalk.example.com
+  properties:
+  - url: https://www.rockwellautomation.com/
+    type: Documentation
+  description: >-
+    Rockwell Automation FactoryTalk provides industrial automation APIs for production line monitoring, PLC programming, SCADA visualization, and MES integration. REST and OPC-UA APIs enable access to production data, alarm events, and equipment performance metrics.
