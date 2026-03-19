@@ -1,0 +1,238 @@
+asyncapi: 2.6.0
+info:
+  title: Rockwell FactoryTalk Hub Real-Time Events API
+  version: 1.0.0
+  description: >-
+    Rockwell FactoryTalk Hub provides real-time industrial event streaming via
+    webhooks and subscriptions. Events include tag value changes, alarm activations,
+    and device connectivity notifications for connected FactoryTalk applications.
+  contact:
+    name: Rockwell Automation Support
+    url: https://www.rockwellautomation.com/en-us/support/
+  license:
+    name: Rockwell Automation Software License
+    url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/
+
+servers:
+  factorytalk-hub:
+    url: https://ftconnect.rockwellautomation.com/events
+    protocol: https
+    description: FactoryTalk Hub event stream endpoint
+
+defaultContentType: application/json
+
+channels:
+  tag/value-changed:
+    description: Event published when a monitored tag value changes beyond deadband
+    subscribe:
+      operationId: onTagValueChanged
+      summary: Tag value change notification
+      description: >-
+        Published when a subscribed tag value changes. Subscription filters
+        control which tags generate events and deadband settings.
+      tags:
+        - name: Tags
+      message:
+        $ref: '#/components/messages/TagValueChangedEvent'
+
+  alarm/activated:
+    description: Event published when an alarm condition is triggered
+    subscribe:
+      operationId: onAlarmActivated
+      summary: Alarm activated notification
+      description: >-
+        Published when a tag value crosses a configured alarm setpoint,
+        triggering an alarm condition.
+      tags:
+        - name: Alarms
+      message:
+        $ref: '#/components/messages/AlarmActivatedEvent'
+
+  alarm/acknowledged:
+    description: Event published when an alarm is acknowledged by an operator
+    subscribe:
+      operationId: onAlarmAcknowledged
+      summary: Alarm acknowledged notification
+      description: Published when an operator acknowledges an active alarm.
+      tags:
+        - name: Alarms
+      message:
+        $ref: '#/components/messages/AlarmAcknowledgedEvent'
+
+  device/status-changed:
+    description: Event published when a connected device connectivity status changes
+    subscribe:
+      operationId: onDeviceStatusChanged
+      summary: Device connectivity status change
+      description: Published when an industrial device goes online or offline.
+      tags:
+        - name: Devices
+      message:
+        $ref: '#/components/messages/DeviceStatusChangedEvent'
+
+components:
+  messages:
+    TagValueChangedEvent:
+      name: TagValueChanged
+      title: Tag Value Changed
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          x-ft-event-id:
+            type: string
+            format: uuid
+          x-ft-event-type:
+            type: string
+            const: tag.value-changed
+      payload:
+        $ref: '#/components/schemas/TagValueChangedPayload'
+
+    AlarmActivatedEvent:
+      name: AlarmActivated
+      title: Alarm Activated
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AlarmEventPayload'
+
+    AlarmAcknowledgedEvent:
+      name: AlarmAcknowledged
+      title: Alarm Acknowledged
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AlarmAcknowledgedPayload'
+
+    DeviceStatusChangedEvent:
+      name: DeviceStatusChanged
+      title: Device Status Changed
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DeviceStatusChangedPayload'
+
+  schemas:
+    TagValueChangedPayload:
+      type: object
+      required:
+        - eventId
+        - eventTimestamp
+        - tagName
+        - newValue
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventTimestamp:
+          type: string
+          format: date-time
+        tagName:
+          type: string
+          description: Fully qualified tag name
+        newValue:
+          description: New tag value
+        previousValue:
+          description: Previous tag value
+        quality:
+          type: string
+          enum: [GOOD, BAD, UNCERTAIN, COMM_FAILURE]
+        engineeringUnit:
+          type: string
+          nullable: true
+        deviceName:
+          type: string
+          nullable: true
+
+    AlarmEventPayload:
+      type: object
+      required:
+        - eventId
+        - eventTimestamp
+        - alarmId
+        - tagName
+        - alarmName
+        - severity
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventTimestamp:
+          type: string
+          format: date-time
+        alarmId:
+          type: string
+        tagName:
+          type: string
+        alarmName:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        triggerValue:
+          description: Tag value that triggered the alarm
+        setpoint:
+          description: Configured alarm setpoint
+        activationTime:
+          type: string
+          format: date-time
+
+    AlarmAcknowledgedPayload:
+      type: object
+      required:
+        - eventId
+        - eventTimestamp
+        - alarmId
+        - acknowledgedBy
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventTimestamp:
+          type: string
+          format: date-time
+        alarmId:
+          type: string
+        tagName:
+          type: string
+        alarmName:
+          type: string
+        acknowledgedBy:
+          type: string
+          description: Username of the operator who acknowledged the alarm
+        comment:
+          type: string
+          nullable: true
+        acknowledgmentTime:
+          type: string
+          format: date-time
+
+    DeviceStatusChangedPayload:
+      type: object
+      required:
+        - eventId
+        - eventTimestamp
+        - deviceName
+        - newStatus
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventTimestamp:
+          type: string
+          format: date-time
+        deviceName:
+          type: string
+        deviceType:
+          type: string
+        previousStatus:
+          type: string
+          enum: [ONLINE, OFFLINE, DEGRADED, UNKNOWN]
+        newStatus:
+          type: string
+          enum: [ONLINE, OFFLINE, DEGRADED, UNKNOWN]
+        ipAddress:
+          type: string
+          nullable: true
+        location:
+          type: string
+          nullable: true

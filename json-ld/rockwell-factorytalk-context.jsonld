@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "ssn": "http://www.w3.org/ns/ssn/",
+    "sosa": "http://www.w3.org/ns/sosa/",
+    "ft": "https://www.rockwellautomation.com/vocab/factorytalk#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "qudt": "http://qudt.org/schema/qudt/",
+
+    "Tag": {
+      "@id": "sosa:ObservableProperty",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "displayName": {
+      "@id": "schema:alternateName"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "dataType": {
+      "@id": "ft:dataType"
+    },
+    "engineeringUnit": {
+      "@id": "qudt:unit"
+    },
+    "readOnly": {
+      "@id": "ft:readOnly",
+      "@type": "xsd:boolean"
+    },
+    "alarmEnabled": {
+      "@id": "ft:alarmEnabled",
+      "@type": "xsd:boolean"
+    },
+    "deadband": {
+      "@id": "ft:deadband",
+      "@type": "xsd:decimal"
+    },
+
+    "TagValue": {
+      "@id": "sosa:Observation",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "sosa:hasSimpleResult"
+    },
+    "quality": {
+      "@id": "ft:dataQuality"
+    },
+    "timestamp": {
+      "@id": "sosa:resultTime",
+      "@type": "xsd:dateTime"
+    },
+
+    "Alarm": {
+      "@id": "schema:AlarmAction",
+      "@type": "@id"
+    },
+    "alarmId": {
+      "@id": "schema:identifier"
+    },
+    "alarmName": {
+      "@id": "schema:name"
+    },
+    "status": {
+      "@id": "schema:status"
+    },
+    "severity": {
+      "@id": "ft:alarmSeverity"
+    },
+    "activationTime": {
+      "@id": "schema:startDate",
+      "@type": "xsd:dateTime"
+    },
+    "acknowledgmentTime": {
+      "@id": "ft:acknowledgmentTime",
+      "@type": "xsd:dateTime"
+    },
+    "acknowledgedBy": {
+      "@id": "schema:agent"
+    },
+
+    "TrendDataPoint": {
+      "@id": "sosa:Observation",
+      "@type": "@id"
+    },
+
+    "Recipe": {
+      "@id": "schema:HowTo",
+      "@type": "@id"
+    },
+    "parameters": {
+      "@id": "schema:step"
+    },
+    "lastModified": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "modifiedBy": {
+      "@id": "schema:author"
+    }
+  }
+}

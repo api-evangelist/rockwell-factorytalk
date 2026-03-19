@@ -1,0 +1,599 @@
+openapi: 3.1.0
+info:
+  title: Rockwell FactoryTalk Optix REST API
+  description: >-
+    Rockwell Automation FactoryTalk Optix REST API provides programmatic access
+    to HMI and SCADA visualization applications, enabling external system integration,
+    tag read/write, alarm management, and runtime control of FactoryTalk Optix
+    applications deployed in industrial automation environments.
+  version: 1.5.0
+  contact:
+    name: Rockwell Automation Support
+    url: https://www.rockwellautomation.com/en-us/support/
+  license:
+    name: Rockwell Automation Software License
+    url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/
+servers:
+  - url: https://{host}/api/v1
+    description: FactoryTalk Optix REST API
+    variables:
+      host:
+        default: optix.example.com
+        description: FactoryTalk Optix server hostname
+
+security:
+  - oauth2: []
+  - apiKey: []
+
+tags:
+  - name: Tags
+    description: Tag read/write operations for process variables
+  - name: Alarms
+    description: Alarm and event management
+  - name: TrendData
+    description: Historical trend data retrieval
+  - name: Recipes
+    description: Recipe management
+  - name: Users
+    description: User session management
+  - name: Projects
+    description: Application project management
+
+paths:
+  /tags:
+    get:
+      operationId: listTags
+      summary: List tags
+      description: Returns all tags (variables) defined in the FactoryTalk Optix project.
+      tags:
+        - Tags
+      parameters:
+        - name: nameFilter
+          in: query
+          description: Wildcard filter for tag names
+          schema:
+            type: string
+        - name: tagType
+          in: query
+          description: Filter by tag type
+          schema:
+            type: string
+            enum: [Bool, Int16, Int32, Int64, UInt16, UInt32, UInt64, Float, Double, String, DateTime]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 1000
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Tag list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                  totalCount:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /tags/values:
+    get:
+      operationId: readTagValues
+      summary: Read multiple tag values
+      description: Reads current values for a list of tags in a single request.
+      tags:
+        - Tags
+      parameters:
+        - name: names
+          in: query
+          required: true
+          description: Comma-separated list of tag names to read
+          schema:
+            type: string
+            example: Conveyor1.Speed,Pump1.Flow,Reactor1.Temperature
+      responses:
+        '200':
+          description: Tag values
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  values:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TagValue'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: writeTagValues
+      summary: Write multiple tag values
+      description: Writes values to one or more tags. Requires write permission on each tag.
+      tags:
+        - Tags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - writes
+              properties:
+                writes:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - value
+                    properties:
+                      name:
+                        type: string
+                        description: Tag name
+                      value:
+                        description: Value to write (type must match tag data type)
+      responses:
+        '200':
+          description: Write results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        success:
+                          type: boolean
+                        error:
+                          type: string
+                          nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /tags/{tagName}:
+    get:
+      operationId: getTag
+      summary: Get tag metadata
+      description: Returns metadata and current value for a specific tag.
+      tags:
+        - Tags
+      parameters:
+        - $ref: '#/components/parameters/TagName'
+      responses:
+        '200':
+          description: Tag details with current value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /alarms:
+    get:
+      operationId: listAlarms
+      summary: List active alarms
+      description: Returns currently active and unacknowledged alarms.
+      tags:
+        - Alarms
+      parameters:
+        - name: status
+          in: query
+          description: Filter by alarm status
+          schema:
+            type: string
+            enum: [ACTIVE, ACKNOWLEDGED, NORMAL]
+        - name: severity
+          in: query
+          description: Minimum severity to return
+          schema:
+            type: string
+            enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Active alarm list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alarms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Alarm'
+                  totalCount:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /alarms/{alarmId}/acknowledge:
+    post:
+      operationId: acknowledgeAlarm
+      summary: Acknowledge an alarm
+      description: Acknowledges an active alarm, optionally with a comment.
+      tags:
+        - Alarms
+      parameters:
+        - name: alarmId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  description: Acknowledgment comment
+      responses:
+        '200':
+          description: Alarm acknowledged
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /alarms/history:
+    get:
+      operationId: getAlarmHistory
+      summary: Get alarm history
+      description: Returns historical alarm events within a time range.
+      tags:
+        - Alarms
+      parameters:
+        - name: startTime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endTime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: tagName
+          in: query
+          description: Filter to specific tag
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 500
+      responses:
+        '200':
+          description: Alarm history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alarmEvents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AlarmEvent'
+
+  /trends/{tagName}:
+    get:
+      operationId: getTrendData
+      summary: Get historical trend data
+      description: Returns historical trending data for a tag within a time range.
+      tags:
+        - TrendData
+      parameters:
+        - $ref: '#/components/parameters/TagName'
+        - name: startTime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endTime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: resolution
+          in: query
+          description: Data resolution (e.g., 1s, 1m, 1h)
+          schema:
+            type: string
+            default: 1m
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 1000
+            maximum: 10000
+      responses:
+        '200':
+          description: Trend data points
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tagName:
+                    type: string
+                  dataPoints:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrendDataPoint'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /recipes:
+    get:
+      operationId: listRecipes
+      summary: List recipes
+      description: Returns recipes defined in the FactoryTalk Optix project.
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: Recipe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recipes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recipe'
+
+  /recipes/{recipeName}/apply:
+    post:
+      operationId: applyRecipe
+      summary: Apply a recipe
+      description: Applies a recipe to a machine or unit, writing configured tag values.
+      tags:
+        - Recipes
+      parameters:
+        - name: recipeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recipe applied successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://optix.example.com/auth/token
+          scopes:
+            optix.read: Read tag values and alarm data
+            optix.write: Write tag values
+            optix.admin: Manage recipes and project configuration
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: FactoryTalk Optix API key
+
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Tag:
+      type: object
+      description: A FactoryTalk Optix tag (process variable)
+      properties:
+        name:
+          type: string
+          description: Fully qualified tag name
+        displayName:
+          type: string
+        description:
+          type: string
+        dataType:
+          type: string
+          enum: [Bool, Int16, Int32, Int64, UInt16, UInt32, UInt64, Float, Double, String, DateTime]
+        engineeringUnit:
+          type: string
+          description: Unit of measure (e.g., RPM, °C, bar)
+        readOnly:
+          type: boolean
+        alarmEnabled:
+          type: boolean
+        deadband:
+          type: number
+          format: double
+          nullable: true
+
+    TagValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          description: Current tag value (type depends on tag dataType)
+        quality:
+          type: string
+          enum: [GOOD, BAD, UNCERTAIN, COMM_FAILURE]
+        timestamp:
+          type: string
+          format: date-time
+
+    TagDetail:
+      allOf:
+        - $ref: '#/components/schemas/Tag'
+        - type: object
+          properties:
+            currentValue:
+              $ref: '#/components/schemas/TagValue'
+
+    Alarm:
+      type: object
+      description: An active alarm condition
+      properties:
+        alarmId:
+          type: string
+        tagName:
+          type: string
+        alarmName:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, ACKNOWLEDGED, NORMAL]
+        severity:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        activationTime:
+          type: string
+          format: date-time
+        acknowledgmentTime:
+          type: string
+          format: date-time
+          nullable: true
+        acknowledgedBy:
+          type: string
+          nullable: true
+        triggerValue:
+          description: Tag value when alarm activated
+        setpoint:
+          description: Alarm setpoint/threshold value
+
+    AlarmEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+        alarmId:
+          type: string
+        tagName:
+          type: string
+        alarmName:
+          type: string
+        eventType:
+          type: string
+          enum: [ACTIVATED, ACKNOWLEDGED, RESET, DISABLED]
+        timestamp:
+          type: string
+          format: date-time
+        value:
+          description: Tag value at event time
+        user:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+
+    TrendDataPoint:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        value:
+          description: Tag value at this timestamp
+        quality:
+          type: string
+          enum: [GOOD, BAD, UNCERTAIN]
+
+    Recipe:
+      type: object
+      description: A FactoryTalk Optix recipe defining a set of tag values
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        parameters:
+          type: array
+          description: Tag-value pairs that make up the recipe
+          items:
+            type: object
+            properties:
+              tagName:
+                type: string
+              value:
+                description: Recipe parameter value
+              units:
+                type: string
+        lastModified:
+          type: string
+          format: date-time
+        modifiedBy:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string

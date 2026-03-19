@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/rockwell-factorytalk/json-schema/rockwell-factorytalk-tag-schema.json",
+  "title": "Rockwell FactoryTalk Tag",
+  "description": "Schema for a Rockwell FactoryTalk Optix tag (process variable), representing a named data point in an industrial automation system.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Fully qualified tag name (may use dot notation for nested tags)"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Tag description"
+    },
+    "dataType": {
+      "type": "string",
+      "enum": ["Bool", "Int16", "Int32", "Int64", "UInt16", "UInt32", "UInt64", "Float", "Double", "String", "DateTime"],
+      "description": "Tag data type"
+    },
+    "engineeringUnit": {
+      "type": "string",
+      "description": "Unit of measure (e.g., RPM, °C, bar, m/s)"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "description": "True if the tag cannot be written via the API"
+    },
+    "alarmEnabled": {
+      "type": "boolean",
+      "description": "True if alarm conditions are configured for this tag"
+    },
+    "deadband": {
+      "type": ["number", "null"],
+      "description": "Deadband value for filtering minor value changes"
+    },
+    "currentValue": {
+      "$ref": "#/$defs/TagValue"
+    }
+  },
+  "required": ["name", "dataType"],
+  "$defs": {
+    "TagValue": {
+      "type": "object",
+      "description": "Current tag value with timestamp and quality",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "description": "Current value (type matches tag dataType)"
+        },
+        "quality": {
+          "type": "string",
+          "enum": ["GOOD", "BAD", "UNCERTAIN", "COMM_FAILURE"],
+          "description": "Data quality status"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the current value"
+        }
+      },
+      "required": ["timestamp", "quality"]
+    }
+  },
+  "examples": [
+    {
+      "name": "Conveyor1.Speed",
+      "displayName": "Conveyor 1 Speed",
+      "description": "Conveyor belt 1 speed in meters per minute",
+      "dataType": "Float",
+      "engineeringUnit": "m/min",
+      "readOnly": false,
+      "alarmEnabled": true,
+      "deadband": 0.5,
+      "currentValue": {
+        "name": "Conveyor1.Speed",
+        "value": 45.2,
+        "quality": "GOOD",
+        "timestamp": "2026-03-18T14:32:00Z"
+      }
+    }
+  ]
+}
