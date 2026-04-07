@@ -26,27 +26,19 @@ security:
   - apiKey: []
 
 tags:
-  - name: Tags
-    description: Tag read/write operations for process variables
   - name: Alarms
     description: Alarm and event management
-  - name: TrendData
-    description: Historical trend data retrieval
   - name: Recipes
     description: Recipe management
-  - name: Users
-    description: User session management
-  - name: Projects
-    description: Application project management
-
+  - name: TrendData
+    description: Historical trend data retrieval
 paths:
   /tags:
     get:
       operationId: listTags
       summary: List tags
       description: Returns all tags (variables) defined in the FactoryTalk Optix project.
-      tags:
-        - Tags
+      tags: []
       parameters:
         - name: nameFilter
           in: query
@@ -91,8 +83,7 @@ paths:
       operationId: readTagValues
       summary: Read multiple tag values
       description: Reads current values for a list of tags in a single request.
-      tags:
-        - Tags
+      tags: []
       parameters:
         - name: names
           in: query
@@ -119,8 +110,7 @@ paths:
       operationId: writeTagValues
       summary: Write multiple tag values
       description: Writes values to one or more tags. Requires write permission on each tag.
-      tags:
-        - Tags
+      tags: []
       requestBody:
         required: true
         content:
@@ -173,8 +163,7 @@ paths:
       operationId: getTag
       summary: Get tag metadata
       description: Returns metadata and current value for a specific tag.
-      tags:
-        - Tags
+      tags: []
       parameters:
         - $ref: '#/components/parameters/TagName'
       responses:

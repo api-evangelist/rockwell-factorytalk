@@ -1,22 +1,18 @@
 aid: rockwell-factorytalk
-url: 
-  https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml
 apis:
   - aid: rockwell-factorytalk:factorytalk-optix-rest-api
     name: Rockwell FactoryTalk Optix REST API
     tags:
-      - Manufacturing
       - Automation
       - HMI
+      - Manufacturing
       - REST
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
-    humanURL: 
-      https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+    image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+    humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
     baseURL: https://api.factorytalk.example.com
     properties:
-      - url: 
-          https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+      - url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
         type: Documentation
       - url: openapi/rockwell-factorytalk-optix-openapi.yml
         type: OpenAPI
@@ -28,18 +24,15 @@ apis:
   - aid: rockwell-factorytalk:factorytalk-hub-api
     name: Rockwell FactoryTalk Hub API
     tags:
-      - Manufacturing
       - Automation
       - Cloud
+      - Manufacturing
       - REST
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
-    humanURL: 
-      https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+    image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+    humanURL: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
     baseURL: https://api.factorytalk.example.com
     properties:
-      - url: 
-          https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+      - url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
         type: Documentation
       - url: asyncapi/rockwell-factorytalk-realtime-asyncapi.yml
         type: AsyncAPI
@@ -51,19 +44,16 @@ apis:
   - aid: rockwell-factorytalk:logix-designer-api
     name: Rockwell FactoryTalk Logix Designer API
     tags:
-      - Manufacturing
       - Automation
+      - Manufacturing
       - PLC
       - Programming
       - REST
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
-    humanURL: 
-      https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
+    image: https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
+    humanURL: https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
     baseURL: https://api.factorytalk.example.com
     properties:
-      - url: 
-          https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
+      - url: https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
         type: Documentation
       - url: https://github.com/rockwellautomation/ra-logix-cicd
         type: SDKs
@@ -73,8 +63,7 @@ apis:
       pipeline automation, and export of L5X controller files for PLC program management.
 
 common:
-  - url: 
-      https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+  - url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
     type: Portal
   - url: https://docs.rockwellautomation.com/en/products/software/factorytalk/
     type: Documentation
@@ -84,8 +73,7 @@ common:
     type: Support
   - url: https://www.rockwellautomation.com/en-us/company/news/blogs/
     type: Blog
-  - url: 
-      https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html
+  - url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html
     type: PrivacyPolicy
   - url: https://github.com/rockwellautomation
     type: GitHubOrganization
