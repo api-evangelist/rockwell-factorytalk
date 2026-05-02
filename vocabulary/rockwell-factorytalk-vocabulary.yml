@@ -1,0 +1,155 @@
+vocabulary:
+  name: Rockwell FactoryTalk Vocabulary
+  description: >-
+    Domain vocabulary for Rockwell Automation FactoryTalk software suite,
+    covering industrial automation, SCADA/HMI, tag-based process variable
+    management, alarm handling, recipe management, and connected factory concepts.
+  version: 1.0.0
+  modified: '2026-05-02'
+
+terms:
+
+  - term: FactoryTalk
+    definition: >-
+      Rockwell Automation's portfolio of software products supporting the design,
+      operation, and maintenance of industrial control systems and connected
+      manufacturing operations. Includes Optix, DataMosaix, View, Historian,
+      Remote Access, and other products.
+    related: [Rockwell Automation, SCADA, HMI, Industrial Automation]
+
+  - term: Tag
+    aliases: [Process Variable, PV, Data Point]
+    definition: >-
+      A named data point in an industrial automation system representing a physical
+      or logical process variable (e.g., Conveyor1.Speed, Reactor1.Temperature).
+      Tags are the fundamental unit of data in FactoryTalk systems. Each tag has
+      a data type, engineering unit, and optional alarm settings.
+    related: [Tag Value, Engineering Unit, Column Family, Alarm]
+
+  - term: Tag Value
+    definition: >-
+      The current or historical reading of a process variable tag. Includes the
+      numeric/boolean/string value, quality indicator (GOOD, BAD, UNCERTAIN,
+      COMM_FAILURE), and a timestamp.
+    related: [Tag, Quality, Timestamp]
+
+  - term: Quality
+    definition: >-
+      A status indicator associated with each tag value indicating the reliability
+      of the data. FactoryTalk quality codes: GOOD (reliable), BAD (unreliable),
+      UNCERTAIN (questionable), COMM_FAILURE (communication error).
+    related: [Tag Value, SCADA]
+
+  - term: HMI
+    aliases: [Human-Machine Interface]
+    definition: >-
+      A visual interface allowing operators to monitor and control industrial
+      equipment and processes. FactoryTalk Optix is Rockwell Automation's modern
+      HMI platform supporting web-based visualization and REST API integration.
+    related: [SCADA, FactoryTalk, Operator Interface]
+
+  - term: SCADA
+    aliases: [Supervisory Control and Data Acquisition]
+    definition: >-
+      A system architecture for remotely monitoring and controlling industrial
+      processes. SCADA systems collect real-time data from field devices (PLCs,
+      sensors) and provide operators with supervisory control capabilities.
+    related: [HMI, PLC, Tag, Alarm]
+
+  - term: PLC
+    aliases: [Programmable Logic Controller]
+    definition: >-
+      An industrial digital computer hardened for manufacturing environments that
+      controls electromechanical processes. Rockwell Allen-Bradley PLCs (e.g.,
+      ControlLogix, CompactLogix) are the primary devices managed by FactoryTalk.
+    related: [SCADA, Logix, I/O Module]
+
+  - term: Alarm
+    definition: >-
+      An automated notification generated when a process variable tag exceeds
+      a configured threshold (setpoint). Alarms have severities (LOW, MEDIUM,
+      HIGH, CRITICAL) and must be acknowledged by operators. FactoryTalk Optix
+      provides REST API endpoints for alarm management.
+    related: [Tag, Setpoint, Alarm Event, Acknowledgment]
+
+  - term: Alarm Acknowledgment
+    definition: >-
+      The operator action of confirming awareness of an alarm condition. In
+      FactoryTalk Optix REST API, the /alarms/{alarmId}/acknowledge endpoint
+      accepts an optional comment with each acknowledgment.
+    related: [Alarm, Operator]
+
+  - term: Alarm Severity
+    definition: >-
+      A classification of alarm urgency in FactoryTalk systems. FactoryTalk Optix
+      defines four levels: LOW (informational), MEDIUM (warning), HIGH (significant),
+      CRITICAL (requires immediate action).
+    related: [Alarm, Tag]
+
+  - term: Trend Data
+    aliases: [Historical Data, Process Data]
+    definition: >-
+      Time-series data recorded from process variable tags, used for performance
+      analysis, troubleshooting, and process optimization. FactoryTalk Optix provides
+      the /trends/{tagName} endpoint for retrieving historical trend data.
+    related: [Tag, Historian, Time Series]
+
+  - term: Recipe
+    aliases: [Production Recipe, Formula]
+    definition: >-
+      A predefined set of tag values (parameters) that configure a machine or
+      production unit for a specific product or process. Applying a recipe in
+      FactoryTalk Optix writes all configured tag values atomically via the
+      /recipes/{recipeName}/apply endpoint.
+    related: [Tag, Production Run, Batch Control]
+
+  - term: Engineering Unit
+    definition: >-
+      The physical unit of measurement associated with a process variable tag
+      (e.g., RPM, °C, bar, m/s, gallons/min). Engineering units provide context
+      for interpreting raw tag values.
+    related: [Tag, Tag Value]
+
+  - term: Logix
+    aliases: [Studio 5000 Logix Designer, Logix Controller]
+    definition: >-
+      Rockwell Automation's control programming platform. Studio 5000 Logix Designer
+      is the IDE for programming Allen-Bradley PLCs. FactoryTalk products interface
+      with Logix controllers for data acquisition and control.
+    related: [PLC, SCADA, FactoryTalk]
+
+  - term: FactoryTalk Optix
+    definition: >-
+      Rockwell Automation's cloud-ready HMI platform providing web-based visualization,
+      tag management, alarm handling, and REST API access for industrial applications.
+      Supports OAuth2 and API key authentication.
+    related: [HMI, FactoryTalk, REST API]
+
+  - term: FactoryTalk Hub
+    definition: >-
+      Rockwell Automation's cloud-based identity and connectivity platform providing
+      centralized authentication, software licensing, and connected factory services.
+      Supports real-time event streaming for FactoryTalk applications.
+    related: [FactoryTalk, Cloud, Identity Management]
+
+  - term: FactoryTalk DataMosaix
+    definition: >-
+      Rockwell Automation's Industrial DataOps solution providing REST API access
+      for industrial data management, contextualization, visualization, and analytics.
+      Supports M2M communication and OpenAPI-specified endpoints.
+    related: [FactoryTalk, Industrial Data, REST API]
+
+  - term: Deadband
+    definition: >-
+      A configurable threshold for tag value change events. A tag value must change
+      by more than the deadband amount before an update event is published. Reduces
+      unnecessary data transmission for slowly changing values.
+    related: [Tag, Event, FactoryTalk Hub]
+
+  - term: IIoT
+    aliases: [Industrial Internet of Things]
+    definition: >-
+      The network of connected industrial devices, machines, and systems that
+      communicate and share data. FactoryTalk products support IIoT integration
+      via REST APIs, MQTT, OPC-UA, and cloud connectivity.
+    related: [FactoryTalk, SCADA, Connected Factory]

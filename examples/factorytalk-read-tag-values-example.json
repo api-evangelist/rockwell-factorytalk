@@ -1,0 +1,37 @@
+{
+  "operation": "readTagValues",
+  "summary": "Read Multiple Tag Values",
+  "description": "Read current values for multiple process variable tags in a single request",
+  "request": {
+    "method": "GET",
+    "url": "https://optix.example.com/api/v1/tags/values?names=Conveyor1.Speed,Pump1.Flow,Reactor1.Temperature",
+    "headers": {
+      "X-Api-Key": "optix-api-key-here"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "values": [
+        {
+          "name": "Conveyor1.Speed",
+          "value": 125.5,
+          "quality": "GOOD",
+          "timestamp": "2026-05-02T10:30:00.000Z"
+        },
+        {
+          "name": "Pump1.Flow",
+          "value": 42.3,
+          "quality": "GOOD",
+          "timestamp": "2026-05-02T10:30:00.001Z"
+        },
+        {
+          "name": "Reactor1.Temperature",
+          "value": 185.2,
+          "quality": "GOOD",
+          "timestamp": "2026-05-02T10:30:00.002Z"
+        }
+      ]
+    }
+  }
+}

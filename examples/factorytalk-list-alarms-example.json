@@ -1,0 +1,46 @@
+{
+  "operation": "listAlarms",
+  "summary": "List Active Alarms",
+  "description": "Retrieve currently active and unacknowledged high-severity alarms",
+  "request": {
+    "method": "GET",
+    "url": "https://optix.example.com/api/v1/alarms?status=ACTIVE&severity=HIGH&limit=50",
+    "headers": {
+      "X-Api-Key": "optix-api-key-here"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "alarms": [
+        {
+          "alarmId": "alarm-001",
+          "tagName": "Reactor1.Temperature",
+          "alarmName": "HighTempAlarm",
+          "description": "Reactor 1 temperature exceeded high limit",
+          "status": "ACTIVE",
+          "severity": "HIGH",
+          "activationTime": "2026-05-02T09:45:00.000Z",
+          "acknowledgmentTime": null,
+          "acknowledgedBy": null,
+          "triggerValue": 215.7,
+          "setpoint": 200.0
+        },
+        {
+          "alarmId": "alarm-002",
+          "tagName": "Pump1.Pressure",
+          "alarmName": "HighPressureAlarm",
+          "description": "Pump 1 discharge pressure exceeded safe operating limit",
+          "status": "ACTIVE",
+          "severity": "HIGH",
+          "activationTime": "2026-05-02T10:12:00.000Z",
+          "acknowledgmentTime": null,
+          "acknowledgedBy": null,
+          "triggerValue": 8.5,
+          "setpoint": 7.5
+        }
+      ],
+      "totalCount": 2
+    }
+  }
+}

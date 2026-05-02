@@ -1,0 +1,107 @@
+extends: spectral:oas
+rules:
+
+  # FactoryTalk Optix uses OAuth2 and API key authentication
+  factorytalk-has-security:
+    description: All FactoryTalk Optix API operations must define security
+    message: "Operation must include security (OAuth2 or API key)"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: security
+      function: defined
+
+  # Operations must have operationIds
+  factorytalk-operation-id-required:
+    description: All operations must have a unique operationId
+    message: "Operation is missing an operationId"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  # OperationIds must use camelCase
+  factorytalk-operation-id-camel-case:
+    description: FactoryTalk operationIds use camelCase naming
+    message: "OperationId '{{value}}' should be in camelCase format"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  # Summaries must exist and use Title Case
+  factorytalk-summary-required:
+    description: All operations must have a summary
+    message: "Operation is missing a summary"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  factorytalk-summary-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' should use Title Case"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  # Paths should use lowercase kebab-case
+  factorytalk-path-kebab-case:
+    description: Path segments should use lowercase letters, digits, or hyphens
+    message: "Path segment should use lowercase kebab-case (no uppercase or underscores)"
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}/.-]+)+$"
+
+  # Responses must include 401 Unauthorized
+  factorytalk-unauthorized-response:
+    description: All authenticated endpoints should document 401 Unauthorized
+    message: "Operation should document 401 Unauthorized response for authentication failures"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["401"]
+
+  # Components must document all schemas
+  factorytalk-schema-description:
+    description: All component schemas should have descriptions
+    message: "Schema '{{path}}' is missing a description"
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+
+  # Tags must use PascalCase (FactoryTalk convention: Alarms, Tags, TrendData, Recipes)
+  factorytalk-tags-pascal-case:
+    description: Tag names should use PascalCase for FactoryTalk consistency
+    message: "Tag '{{value}}' should use PascalCase"
+    severity: info
+    given: "$.tags[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*$"
+
+  # Array responses should include a totalCount field
+  factorytalk-array-total-count:
+    description: List operations should return totalCount for pagination support
+    message: "Consider including a totalCount field in list response schemas"
+    severity: info
+    given: "$.paths[*][get].responses['200'].content['application/json'].schema"
+    then:
+      function: defined

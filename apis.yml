@@ -85,10 +85,16 @@ common:
     type: JSONSchema
   - url: json-ld/rockwell-factorytalk-context.jsonld
     type: JSONLDContext
+  - url: json-structure/rockwell-factorytalk-structure.json
+    type: JSONStructure
+  - url: vocabulary/rockwell-factorytalk-vocabulary.yml
+    type: Vocabulary
+  - url: rules/rockwell-factorytalk-rules.yml
+    type: SpectralRuleset
 maintainers:
   - name: Kin Lane
     email: kin@apievangelist.com
-modified: '2026-03-18'
+modified: '2026-05-02'
 description: >-
   Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation
   that supports the design, operation, and maintenance of industrial control systems

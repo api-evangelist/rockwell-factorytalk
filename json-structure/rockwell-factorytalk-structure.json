@@ -1,0 +1,90 @@
+{
+  "title": "Rockwell FactoryTalk Data Structure",
+  "description": "Hierarchical structure documentation for FactoryTalk Optix REST API data entities including Tags, Alarms, Recipes, and Trend Data.",
+  "structure": {
+    "Tag": {
+      "description": "A named process variable (data point) in a FactoryTalk Optix project",
+      "fields": {
+        "name": "string - Fully qualified tag name (may use dot notation, e.g., Conveyor1.Speed)",
+        "displayName": "string - Human-readable display name for operator interfaces",
+        "description": "string - Tag description",
+        "dataType": "enum - Bool | Int16 | Int32 | Int64 | UInt16 | UInt32 | UInt64 | Float | Double | String | DateTime",
+        "engineeringUnit": "string - Unit of measure (e.g., RPM, °C, bar)",
+        "readOnly": "boolean - Whether the tag can be written via API",
+        "alarmEnabled": "boolean - Whether alarm monitoring is active for this tag",
+        "deadband": "number - Change threshold for value update events"
+      },
+      "children": {
+        "currentValue": "TagValue - Current value with quality and timestamp (in TagDetail)"
+      }
+    },
+    "TagValue": {
+      "description": "A time-stamped reading of a process variable tag",
+      "fields": {
+        "name": "string - Tag name",
+        "value": "any - Current value (type depends on tag dataType)",
+        "quality": "enum - GOOD | BAD | UNCERTAIN | COMM_FAILURE",
+        "timestamp": "datetime - Time of this reading (ISO 8601)"
+      }
+    },
+    "Alarm": {
+      "description": "An active alarm condition for a monitored process variable",
+      "fields": {
+        "alarmId": "string - Unique alarm identifier",
+        "tagName": "string - Tag that triggered the alarm",
+        "alarmName": "string - Alarm configuration name",
+        "description": "string - Alarm description",
+        "status": "enum - ACTIVE | ACKNOWLEDGED | NORMAL",
+        "severity": "enum - LOW | MEDIUM | HIGH | CRITICAL",
+        "activationTime": "datetime - When the alarm condition was first detected",
+        "acknowledgmentTime": "datetime - When the alarm was acknowledged (null if unacknowledged)",
+        "acknowledgedBy": "string - Username of acknowledging operator",
+        "triggerValue": "any - Tag value when alarm activated",
+        "setpoint": "any - Configured alarm threshold value"
+      }
+    },
+    "AlarmEvent": {
+      "description": "A historical alarm event record from the alarm log",
+      "fields": {
+        "eventId": "string - Unique event identifier",
+        "alarmId": "string - Parent alarm ID",
+        "tagName": "string - Associated tag name",
+        "alarmName": "string - Alarm name",
+        "eventType": "enum - ACTIVATED | ACKNOWLEDGED | RESET | DISABLED",
+        "timestamp": "datetime - Event occurrence time",
+        "value": "any - Tag value at event time",
+        "user": "string - Operator username (for acknowledgment events)",
+        "comment": "string - Operator comment (for acknowledgment events)"
+      }
+    },
+    "TrendDataPoint": {
+      "description": "A single historical data point in a tag trend",
+      "fields": {
+        "timestamp": "datetime - Data point timestamp (ISO 8601)",
+        "value": "any - Tag value at this timestamp",
+        "quality": "enum - GOOD | BAD | UNCERTAIN"
+      }
+    },
+    "Recipe": {
+      "description": "A production recipe defining a set of tag values for a machine configuration",
+      "fields": {
+        "name": "string - Recipe name",
+        "description": "string - Recipe description",
+        "category": "string - Recipe category for organization",
+        "lastModified": "datetime - Last modification timestamp",
+        "modifiedBy": "string - Username of last editor"
+      },
+      "children": {
+        "parameters": "array of RecipeParameter - Tag-value pairs that define the recipe"
+      }
+    },
+    "RecipeParameter": {
+      "description": "A single tag-value pair in a recipe configuration",
+      "fields": {
+        "tagName": "string - Target tag name",
+        "value": "any - Value to write when recipe is applied",
+        "units": "string - Engineering units for documentation"
+      }
+    }
+  }
+}

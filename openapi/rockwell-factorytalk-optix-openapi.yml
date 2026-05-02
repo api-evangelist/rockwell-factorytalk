@@ -36,7 +36,7 @@ paths:
   /tags:
     get:
       operationId: listTags
-      summary: List tags
+      summary: List Tags
       description: Returns all tags (variables) defined in the FactoryTalk Optix project.
       tags: []
       parameters:
@@ -81,7 +81,7 @@ paths:
   /tags/values:
     get:
       operationId: readTagValues
-      summary: Read multiple tag values
+      summary: Read Multiple Tag Values
       description: Reads current values for a list of tags in a single request.
       tags: []
       parameters:
@@ -108,7 +108,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: writeTagValues
-      summary: Write multiple tag values
+      summary: Write Multiple Tag Values
       description: Writes values to one or more tags. Requires write permission on each tag.
       tags: []
       requestBody:
@@ -161,7 +161,7 @@ paths:
   /tags/{tagName}:
     get:
       operationId: getTag
-      summary: Get tag metadata
+      summary: Get Tag Metadata
       description: Returns metadata and current value for a specific tag.
       tags: []
       parameters:
@@ -179,7 +179,7 @@ paths:
   /alarms:
     get:
       operationId: listAlarms
-      summary: List active alarms
+      summary: List Active Alarms
       description: Returns currently active and unacknowledged alarms.
       tags:
         - Alarms
@@ -226,7 +226,7 @@ paths:
   /alarms/{alarmId}/acknowledge:
     post:
       operationId: acknowledgeAlarm
-      summary: Acknowledge an alarm
+      summary: Acknowledge an Alarm
       description: Acknowledges an active alarm, optionally with a comment.
       tags:
         - Alarms
@@ -254,7 +254,7 @@ paths:
   /alarms/history:
     get:
       operationId: getAlarmHistory
-      summary: Get alarm history
+      summary: Get Alarm History
       description: Returns historical alarm events within a time range.
       tags:
         - Alarms
@@ -297,7 +297,7 @@ paths:
   /trends/{tagName}:
     get:
       operationId: getTrendData
-      summary: Get historical trend data
+      summary: Get Historical Trend Data
       description: Returns historical trending data for a tag within a time range.
       tags:
         - TrendData
@@ -347,7 +347,7 @@ paths:
   /recipes:
     get:
       operationId: listRecipes
-      summary: List recipes
+      summary: List Recipes
       description: Returns recipes defined in the FactoryTalk Optix project.
       tags:
         - Recipes
@@ -367,7 +367,7 @@ paths:
   /recipes/{recipeName}/apply:
     post:
       operationId: applyRecipe
-      summary: Apply a recipe
+      summary: Apply a Recipe
       description: Applies a recipe to a machine or unit, writing configured tag values.
       tags:
         - Recipes

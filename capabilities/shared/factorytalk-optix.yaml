@@ -1,0 +1,323 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Rockwell FactoryTalk Optix REST API"
+  description: >-
+    FactoryTalk Optix REST API provides programmatic access to HMI and SCADA
+    visualization applications, enabling tag read/write, alarm management,
+    recipe management, and historical trend data retrieval.
+  tags:
+    - HMI
+    - SCADA
+    - Industrial Automation
+    - Manufacturing
+    - Tags
+    - Alarms
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      FACTORYTALK_OPTIX_API_KEY: FACTORYTALK_OPTIX_API_KEY
+      FACTORYTALK_OPTIX_OAUTH_TOKEN: FACTORYTALK_OPTIX_OAUTH_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: factorytalk-optix
+      baseUri: https://{host}/api/v1
+      description: "FactoryTalk Optix REST API for HMI/SCADA integration"
+      authentication:
+        type: apikey
+        key: X-Api-Key
+        value: "{{FACTORYTALK_OPTIX_API_KEY}}"
+        placement: header
+      resources:
+        - name: tags
+          path: /tags
+          description: "Tag (process variable) management and monitoring"
+          operations:
+            - name: list-tags
+              method: GET
+              description: "Returns all tags (variables) defined in the FactoryTalk Optix project"
+              inputParameters:
+                - name: nameFilter
+                  in: query
+                  type: string
+                  required: false
+                  description: "Wildcard filter for tag names"
+                - name: tagType
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by tag data type"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum records to return"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: read-tag-values
+              method: GET
+              description: "Read current values for a list of tags in a single request"
+              inputParameters:
+                - name: names
+                  in: query
+                  type: string
+                  required: true
+                  description: "Comma-separated list of tag names to read"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: write-tag-values
+              method: POST
+              description: "Write values to one or more tags"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  writes: "{{tools.writes}}"
+
+            - name: get-tag
+              method: GET
+              description: "Returns metadata and current value for a specific tag"
+              inputParameters:
+                - name: tagName
+                  in: path
+                  type: string
+                  required: true
+                  description: "Tag name (may use dot notation)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: alarms
+          path: /alarms
+          description: "Alarm and event management"
+          operations:
+            - name: list-alarms
+              method: GET
+              description: "Returns currently active and unacknowledged alarms"
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by alarm status (ACTIVE, ACKNOWLEDGED, NORMAL)"
+                - name: severity
+                  in: query
+                  type: string
+                  required: false
+                  description: "Minimum severity (LOW, MEDIUM, HIGH, CRITICAL)"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum records to return"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: acknowledge-alarm
+              method: POST
+              description: "Acknowledges an active alarm, optionally with a comment"
+              inputParameters:
+                - name: alarmId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Alarm identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  comment: "{{tools.comment}}"
+
+            - name: get-alarm-history
+              method: GET
+              description: "Returns historical alarm events within a time range"
+              inputParameters:
+                - name: startTime
+                  in: query
+                  type: string
+                  required: true
+                  description: "Start of time range (ISO 8601)"
+                - name: endTime
+                  in: query
+                  type: string
+                  required: true
+                  description: "End of time range (ISO 8601)"
+                - name: tagName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to specific tag"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum records to return"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: trends
+          path: /trends
+          description: "Historical trend data retrieval"
+          operations:
+            - name: get-trend-data
+              method: GET
+              description: "Returns historical trending data for a tag within a time range"
+              inputParameters:
+                - name: tagName
+                  in: path
+                  type: string
+                  required: true
+                  description: "Tag name to retrieve trend data for"
+                - name: startTime
+                  in: query
+                  type: string
+                  required: true
+                  description: "Start of time range (ISO 8601)"
+                - name: endTime
+                  in: query
+                  type: string
+                  required: true
+                  description: "End of time range (ISO 8601)"
+                - name: resolution
+                  in: query
+                  type: string
+                  required: false
+                  description: "Data resolution (e.g., 1s, 1m, 1h)"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum data points to return"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: recipes
+          path: /recipes
+          description: "Recipe management"
+          operations:
+            - name: list-recipes
+              method: GET
+              description: "Returns recipes defined in the FactoryTalk Optix project"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: apply-recipe
+              method: POST
+              description: "Applies a recipe to a machine or unit, writing configured tag values"
+              inputParameters:
+                - name: recipeName
+                  in: path
+                  type: string
+                  required: true
+                  description: "Recipe name to apply"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: factorytalk-optix-api
+      resources:
+        - path: /v1/tags
+          name: tags
+          description: "Tag management and monitoring"
+          operations:
+            - method: GET
+              name: list-tags
+              description: "List all process variable tags"
+              call: "factorytalk-optix.list-tags"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/alarms
+          name: alarms
+          description: "Alarm management"
+          operations:
+            - method: GET
+              name: list-alarms
+              description: "List active alarms"
+              call: "factorytalk-optix.list-alarms"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: factorytalk-optix-mcp
+      transport: http
+      tools:
+        - name: list-tags
+          description: "List all process variable tags in the FactoryTalk Optix project"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "factorytalk-optix.list-tags"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: read-tag-values
+          description: "Read current values for one or more tags"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "factorytalk-optix.read-tag-values"
+          with:
+            names: "tools.names"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-alarms
+          description: "List active and unacknowledged alarms"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "factorytalk-optix.list-alarms"
+          outputParameters:
+            - type: object
+              mapping: "$."

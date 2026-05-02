@@ -1,71 +1,93 @@
-# Unknown (rockwell-factorytalk)
+# Rockwell FactoryTalk
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml)
+Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation that supports the design, operation, and maintenance of industrial control systems and connected manufacturing operations. The portfolio includes FactoryTalk Optix (HMI/SCADA), FactoryTalk Hub (cloud identity and connectivity), FactoryTalk DataMosaix (Industrial DataOps), and Logix Designer integration tools.
 
-## Timestamps
+**Website:** [https://www.rockwellautomation.com/en-us/](https://www.rockwellautomation.com/en-us/)
 
-- **Modified:** 2026-03-18 
+**Portal:** [https://www.rockwellautomation.com/en-us/products/software/factorytalk.html](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
+
+**Documentation:** [https://docs.rockwellautomation.com/en/products/software/factorytalk/](https://docs.rockwellautomation.com/en/products/software/factorytalk/)
+
+**GitHub:** [https://github.com/rockwellautomation](https://github.com/rockwellautomation)
 
 ## APIs
 
-### Rockwell FactoryTalk Optix REST API
-Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications.
+### FactoryTalk Optix REST API
+Programmatic access to HMI and SCADA visualization applications: tag read/write, alarm management, recipe management, and historical trend data retrieval.
 
-**Human URL:** [https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html](https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html)
+- **Documentation:** [https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html](https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html)
+- **OpenAPI:** [openapi/rockwell-factorytalk-optix-openapi.yml](openapi/rockwell-factorytalk-optix-openapi.yml)
 
+### FactoryTalk Hub API
+Cloud-based industrial event streaming via webhooks for tag value changes, alarm activations, and device connectivity notifications.
 
-#### Tags:
+- **Documentation:** [https://www.rockwellautomation.com/en-us/products/software/factorytalk.html](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
+- **AsyncAPI:** [asyncapi/rockwell-factorytalk-realtime-asyncapi.yml](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml)
 
- - Manufacturing, Automation, HMI, REST
+### Logix Designer API
+Programmatic access to Logix controller programming for CI/CD pipeline automation and version control integration.
 
-#### Properties
+- **GitHub:** [https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools](https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools)
 
-- [Documentation](https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html)
-- [OpenAPI](openapi/rockwell-factorytalk-optix-openapi.yml)
+## Artifacts
 
-### Rockwell FactoryTalk Hub API
-Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk software applications, enabling centralized identity management, software licensing, and connected factory services.
+### OpenAPI Specs
+| File | Description |
+|------|-------------|
+| [openapi/rockwell-factorytalk-optix-openapi.yml](openapi/rockwell-factorytalk-optix-openapi.yml) | FactoryTalk Optix REST API specification |
 
-**Human URL:** [https://www.rockwellautomation.com/en-us/products/software/factorytalk.html](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
+### AsyncAPI Specs
+| File | Description |
+|------|-------------|
+| [asyncapi/rockwell-factorytalk-realtime-asyncapi.yml](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml) | FactoryTalk Hub real-time events AsyncAPI |
 
+### Rules
+| File | Description |
+|------|-------------|
+| [rules/rockwell-factorytalk-rules.yml](rules/rockwell-factorytalk-rules.yml) | Spectral ruleset for FactoryTalk API conventions |
 
-#### Tags:
+### Capabilities
+| File | Description |
+|------|-------------|
+| [capabilities/industrial-operations.yaml](capabilities/industrial-operations.yaml) | Unified industrial operations workflow capability |
+| [capabilities/shared/factorytalk-optix.yaml](capabilities/shared/factorytalk-optix.yaml) | FactoryTalk Optix shared capability definition |
 
- - Manufacturing, Automation, Cloud, REST
+### JSON Schema
+| File | Description |
+|------|-------------|
+| [json-schema/rockwell-factorytalk-tag-schema.json](json-schema/rockwell-factorytalk-tag-schema.json) | FactoryTalk tag (process variable) schema |
 
-#### Properties
+### JSON Structure
+| File | Description |
+|------|-------------|
+| [json-structure/rockwell-factorytalk-structure.json](json-structure/rockwell-factorytalk-structure.json) | FactoryTalk data structure documentation |
 
-- [Documentation](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
-- [AsyncAPI](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml)
+### JSON-LD
+| File | Description |
+|------|-------------|
+| [json-ld/rockwell-factorytalk-context.jsonld](json-ld/rockwell-factorytalk-context.jsonld) | JSON-LD context for FactoryTalk data semantics |
 
-### Rockwell FactoryTalk Logix Designer API
-Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller programming, allowing version control integration, CI/CD pipeline automation, and export of L5X controller files for PLC program management.
+### Examples
+| File | Description |
+|------|-------------|
+| [examples/factorytalk-read-tag-values-example.json](examples/factorytalk-read-tag-values-example.json) | Read multiple tag values example |
+| [examples/factorytalk-list-alarms-example.json](examples/factorytalk-list-alarms-example.json) | List active alarms example |
 
-**Human URL:** [https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools](https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools)
+### Vocabulary
+| File | Description |
+|------|-------------|
+| [vocabulary/rockwell-factorytalk-vocabulary.yml](vocabulary/rockwell-factorytalk-vocabulary.yml) | FactoryTalk domain vocabulary |
 
+## Capabilities
 
-#### Tags:
+### Industrial Operations (`capabilities/industrial-operations.yaml`)
+Unified workflow for industrial operations monitoring and control using FactoryTalk Optix REST API. Enables plant operators, process engineers, and maintenance teams to:
+- Monitor real-time process variable tags
+- Manage alarms and acknowledgments
+- Analyze historical trend data
+- Apply production recipes
 
- - Manufacturing, Automation, PLC, Programming, REST
-
-#### Properties
-
-- [Documentation](https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools)
-- [SDKs](https://github.com/rockwellautomation/ra-logix-cicd)
-
-## Common Properties
-
-- [Portal](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
-- [Documentation](https://docs.rockwellautomation.com/en/products/software/factorytalk/)
-- [Website](https://www.rockwellautomation.com/en-us/)
-- [Support](https://www.rockwellautomation.com/en-us/support/)
-- [Blog](https://www.rockwellautomation.com/en-us/company/news/blogs/)
-- [PrivacyPolicy](https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html)
-- [GitHubOrganization](https://github.com/rockwellautomation)
-- [OpenAPI](openapi/rockwell-factorytalk-optix-openapi.yml)
-- [AsyncAPI](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml)
-- [JSONSchema](json-schema/rockwell-factorytalk-tag-schema.json)
-- [JSONLDContext](json-ld/rockwell-factorytalk-context.jsonld)
+**REST Port:** 8080 | **MCP Port:** 9080 | **Tools:** 10
 
 ## Maintainers
 
