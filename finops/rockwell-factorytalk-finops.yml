@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,140 +9,69 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: rockwell-factorytalk
 providerId: rockwell-factorytalk
-publisherName: rockwell-factorytalk
-serviceCategory: API
+publisherName: Rockwell Automation, Inc.
+serviceCategory: Industrial Automation Software
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
+  - Manufacturing
+  - Industrial
+  - Automation
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the rockwell-factorytalk API surface. Provides a FOCUS-aligned
-  mapping for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: >-
+  Rockwell FactoryTalk is licensed software sold through distributors. FinOps treatment is
+  capex/opex license-driven rather than usage-metered.
+notes: >-
+  No public usage API or itemized billing exists. Cost is dominated by perpetual or
+  subscription license SKUs and FactoryTalk Hub site contracts.
+sources:
+  - https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: License-Based
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: rockwell-factorytalk
-  ServiceCategory: Developer Tools / API
-  ProviderName: rockwell-factorytalk
-  PublisherName: rockwell-factorytalk
-  InvoiceIssuerName: rockwell-factorytalk
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Rockwell FactoryTalk
+  ServiceCategory: Industrial Automation Software
+  ProviderName: Rockwell Automation
+  PublisherName: Rockwell Automation, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: license_seats
+    description: FactoryTalk licensed seats and tag counts per site
+    unit: license
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
+      - product
+      - site
+  - name: hub_subscription
+    description: FactoryTalk Hub annual subscription
+    unit: month
+    aggregation: sum
+    dimensions:
       - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Rockwell FactoryTalk Optix REST API
-    baseURL: https://api.factorytalk.example.com
-    tags:
-      - Automation
-      - HMI
-      - Manufacturing
-      - REST
-    serviceName: Rockwell FactoryTalk Optix REST API
-    serviceCategory: API
-  - name: Rockwell FactoryTalk Hub API
-    baseURL: https://api.factorytalk.example.com
-    tags:
-      - Automation
-      - Cloud
-      - Manufacturing
-      - REST
-    serviceName: Rockwell FactoryTalk Hub API
-    serviceCategory: API
-  - name: Rockwell FactoryTalk Logix Designer API
-    baseURL: https://api.factorytalk.example.com
-    tags:
-      - Automation
-      - Manufacturing
-      - PLC
-      - Programming
-      - REST
-    serviceName: Rockwell FactoryTalk Logix Designer API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - site
+principles:
+  - name: Visibility
+    description: >-
+      Track FactoryTalk license entitlements and renewal dates through Rockwell's licensing
+      portal and the AP/procurement system.
+  - name: Allocation
+    description: >-
+      Allocate FactoryTalk costs to the manufacturing site or production line that consumes
+      the licenses, not to corporate IT.
+  - name: Optimization
+    description: >-
+      Right-size license SKUs against actual tag and user counts; consolidate sites onto Hub
+      where it lowers the per-site total.
+  - name: Accountability
+    description: >-
+      Plant engineering and OT leadership own FactoryTalk license decisions; review annually
+      against site headcount and connected-tag growth.
 maintainers:
-  - name: Kin Lane
+  - FN: Kin Lane
     email: kin@apievangelist.com
