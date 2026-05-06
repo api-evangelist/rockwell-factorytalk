@@ -1,297 +1,492 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Rockwell FactoryTalk Industrial Operations"
-  description: >-
-    Unified workflow capability for industrial operations monitoring and control
-    using FactoryTalk Optix REST API. Enables plant operators, process engineers,
-    and maintenance teams to monitor real-time process variables, manage alarms,
-    analyze historical trends, and apply production recipes across manufacturing
-    operations.
+  label: Rockwell FactoryTalk Industrial Operations
+  description: Unified workflow capability for industrial operations monitoring and control using FactoryTalk Optix REST API.
+    Enables plant operators, process engineers, and maintenance teams to monitor real-time process variables, manage alarms,
+    analyze historical trends, and apply production recipes across manufacturing operations.
   tags:
-    - Industrial Automation
-    - Manufacturing
-    - SCADA
-    - HMI
-    - Process Control
-    - Rockwell Automation
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - Industrial Automation
+  - Manufacturing
+  - SCADA
+  - HMI
+  - Process Control
+  - Rockwell Automation
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      FACTORYTALK_OPTIX_API_KEY: FACTORYTALK_OPTIX_API_KEY
-
+- namespace: env
+  keys:
+    FACTORYTALK_OPTIX_API_KEY: FACTORYTALK_OPTIX_API_KEY
 capability:
   consumes:
-    - import: factorytalk-optix
-      location: ./shared/factorytalk-optix.yaml
-
+  - type: http
+    namespace: factorytalk-optix
+    baseUri: https://{host}/api/v1
+    description: FactoryTalk Optix REST API for HMI/SCADA integration
+    authentication:
+      type: apikey
+      key: X-Api-Key
+      value: '{{FACTORYTALK_OPTIX_API_KEY}}'
+      placement: header
+    resources:
+    - name: tags
+      path: /tags
+      description: Tag (process variable) management and monitoring
+      operations:
+      - name: list-tags
+        method: GET
+        description: Returns all tags (variables) defined in the FactoryTalk Optix project
+        inputParameters:
+        - name: nameFilter
+          in: query
+          type: string
+          required: false
+          description: Wildcard filter for tag names
+        - name: tagType
+          in: query
+          type: string
+          required: false
+          description: Filter by tag data type
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum records to return
+        - name: offset
+          in: query
+          type: integer
+          required: false
+          description: Pagination offset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: read-tag-values
+        method: GET
+        description: Read current values for a list of tags in a single request
+        inputParameters:
+        - name: names
+          in: query
+          type: string
+          required: true
+          description: Comma-separated list of tag names to read
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: write-tag-values
+        method: POST
+        description: Write values to one or more tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            writes: '{{tools.writes}}'
+      - name: get-tag
+        method: GET
+        description: Returns metadata and current value for a specific tag
+        inputParameters:
+        - name: tagName
+          in: path
+          type: string
+          required: true
+          description: Tag name (may use dot notation)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: alarms
+      path: /alarms
+      description: Alarm and event management
+      operations:
+      - name: list-alarms
+        method: GET
+        description: Returns currently active and unacknowledged alarms
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          required: false
+          description: Filter by alarm status (ACTIVE, ACKNOWLEDGED, NORMAL)
+        - name: severity
+          in: query
+          type: string
+          required: false
+          description: Minimum severity (LOW, MEDIUM, HIGH, CRITICAL)
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum records to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: acknowledge-alarm
+        method: POST
+        description: Acknowledges an active alarm, optionally with a comment
+        inputParameters:
+        - name: alarmId
+          in: path
+          type: string
+          required: true
+          description: Alarm identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            comment: '{{tools.comment}}'
+      - name: get-alarm-history
+        method: GET
+        description: Returns historical alarm events within a time range
+        inputParameters:
+        - name: startTime
+          in: query
+          type: string
+          required: true
+          description: Start of time range (ISO 8601)
+        - name: endTime
+          in: query
+          type: string
+          required: true
+          description: End of time range (ISO 8601)
+        - name: tagName
+          in: query
+          type: string
+          required: false
+          description: Filter to specific tag
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum records to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: trends
+      path: /trends
+      description: Historical trend data retrieval
+      operations:
+      - name: get-trend-data
+        method: GET
+        description: Returns historical trending data for a tag within a time range
+        inputParameters:
+        - name: tagName
+          in: path
+          type: string
+          required: true
+          description: Tag name to retrieve trend data for
+        - name: startTime
+          in: query
+          type: string
+          required: true
+          description: Start of time range (ISO 8601)
+        - name: endTime
+          in: query
+          type: string
+          required: true
+          description: End of time range (ISO 8601)
+        - name: resolution
+          in: query
+          type: string
+          required: false
+          description: Data resolution (e.g., 1s, 1m, 1h)
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum data points to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: recipes
+      path: /recipes
+      description: Recipe management
+      operations:
+      - name: list-recipes
+        method: GET
+        description: Returns recipes defined in the FactoryTalk Optix project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: apply-recipe
+        method: POST
+        description: Applies a recipe to a machine or unit, writing configured tag values
+        inputParameters:
+        - name: recipeName
+          in: path
+          type: string
+          required: true
+          description: Recipe name to apply
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: factorytalk-operations-api
-      description: "Unified REST API for FactoryTalk industrial operations monitoring and control."
-      resources:
-        - path: /v1/tags
-          name: tags
-          description: "Process variable tag monitoring"
-          operations:
-            - method: GET
-              name: list-tags
-              description: "List all process variable tags defined in the project"
-              call: "factorytalk-optix.list-tags"
-              with:
-                nameFilter: "rest.nameFilter"
-                tagType: "rest.tagType"
-                limit: "rest.limit"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/tag-values
-          name: tag-values
-          description: "Real-time tag value read and write operations"
-          operations:
-            - method: GET
-              name: read-tag-values
-              description: "Read current values for one or more tags"
-              call: "factorytalk-optix.read-tag-values"
-              with:
-                names: "rest.names"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-            - method: POST
-              name: write-tag-values
-              description: "Write values to one or more process variable tags"
-              call: "factorytalk-optix.write-tag-values"
-              with:
-                writes: "rest.writes"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/alarms
-          name: alarms
-          description: "Alarm monitoring and management"
-          operations:
-            - method: GET
-              name: list-alarms
-              description: "List active and unacknowledged alarms"
-              call: "factorytalk-optix.list-alarms"
-              with:
-                status: "rest.status"
-                severity: "rest.severity"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/alarms/{alarmId}/acknowledge
-          name: alarm-acknowledgment
-          description: "Alarm acknowledgment operations"
-          operations:
-            - method: POST
-              name: acknowledge-alarm
-              description: "Acknowledge an active alarm with optional comment"
-              call: "factorytalk-optix.acknowledge-alarm"
-              with:
-                alarmId: "rest.alarmId"
-                comment: "rest.comment"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/alarm-history
-          name: alarm-history
-          description: "Historical alarm event data"
-          operations:
-            - method: GET
-              name: get-alarm-history
-              description: "Get alarm history within a time range"
-              call: "factorytalk-optix.get-alarm-history"
-              with:
-                startTime: "rest.startTime"
-                endTime: "rest.endTime"
-                tagName: "rest.tagName"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/trends/{tagName}
-          name: trends
-          description: "Historical trend data for process variables"
-          operations:
-            - method: GET
-              name: get-trend-data
-              description: "Get historical trend data for a tag"
-              call: "factorytalk-optix.get-trend-data"
-              with:
-                tagName: "rest.tagName"
-                startTime: "rest.startTime"
-                endTime: "rest.endTime"
-                resolution: "rest.resolution"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/recipes
-          name: recipes
-          description: "Production recipe management"
-          operations:
-            - method: GET
-              name: list-recipes
-              description: "List all available production recipes"
-              call: "factorytalk-optix.list-recipes"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/recipes/{recipeName}/apply
-          name: recipe-application
-          description: "Apply a recipe to a production unit"
-          operations:
-            - method: POST
-              name: apply-recipe
-              description: "Apply a recipe to write configured tag values to a machine"
-              call: "factorytalk-optix.apply-recipe"
-              with:
-                recipeName: "rest.recipeName"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9080
-      namespace: factorytalk-operations-mcp
-      transport: http
-      description: "MCP server for AI-assisted industrial operations monitoring and control."
-      tools:
-        - name: list-tags
-          description: "List all process variable tags defined in the FactoryTalk Optix project"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "factorytalk-optix.list-tags"
-          with:
-            nameFilter: "tools.nameFilter"
-            tagType: "tools.tagType"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: read-tag-values
-          description: "Read current values for one or more process variable tags in real-time"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "factorytalk-optix.read-tag-values"
-          with:
-            names: "tools.names"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: write-tag-values
-          description: "Write values to one or more process variable tags to control machine state"
-          hints:
-            readOnly: false
-            destructive: false
-          call: "factorytalk-optix.write-tag-values"
-          with:
-            writes: "tools.writes"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-tag-metadata
-          description: "Get metadata and current value for a specific process variable tag"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "factorytalk-optix.get-tag"
-          with:
-            tagName: "tools.tagName"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-active-alarms
-          description: "List currently active and unacknowledged alarms on the production line"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "factorytalk-optix.list-alarms"
-          with:
-            status: "ACTIVE"
-            severity: "tools.severity"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: acknowledge-alarm
-          description: "Acknowledge an active alarm with an operator comment"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: true
-          call: "factorytalk-optix.acknowledge-alarm"
-          with:
-            alarmId: "tools.alarmId"
-            comment: "tools.comment"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-alarm-history
-          description: "Retrieve alarm event history for a time range to investigate recurring issues"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "factorytalk-optix.get-alarm-history"
-          with:
-            startTime: "tools.startTime"
-            endTime: "tools.endTime"
-            tagName: "tools.tagName"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-trend-data
-          description: "Get historical trend data for a process variable tag over a time range"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "factorytalk-optix.get-trend-data"
-          with:
-            tagName: "tools.tagName"
-            startTime: "tools.startTime"
-            endTime: "tools.endTime"
-            resolution: "tools.resolution"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-recipes
-          description: "List all available production recipes and their parameters"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "factorytalk-optix.list-recipes"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: apply-recipe
-          description: "Apply a production recipe to a machine or unit, writing all configured tag values"
-          hints:
-            readOnly: false
-            destructive: false
-          call: "factorytalk-optix.apply-recipe"
-          with:
-            recipeName: "tools.recipeName"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: factorytalk-operations-api
+    description: Unified REST API for FactoryTalk industrial operations monitoring and control.
+    resources:
+    - path: /v1/tags
+      name: tags
+      description: Process variable tag monitoring
+      operations:
+      - method: GET
+        name: list-tags
+        description: List all process variable tags defined in the project
+        call: factorytalk-optix.list-tags
+        with:
+          nameFilter: rest.nameFilter
+          tagType: rest.tagType
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tag-values
+      name: tag-values
+      description: Real-time tag value read and write operations
+      operations:
+      - method: GET
+        name: read-tag-values
+        description: Read current values for one or more tags
+        call: factorytalk-optix.read-tag-values
+        with:
+          names: rest.names
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: write-tag-values
+        description: Write values to one or more process variable tags
+        call: factorytalk-optix.write-tag-values
+        with:
+          writes: rest.writes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/alarms
+      name: alarms
+      description: Alarm monitoring and management
+      operations:
+      - method: GET
+        name: list-alarms
+        description: List active and unacknowledged alarms
+        call: factorytalk-optix.list-alarms
+        with:
+          status: rest.status
+          severity: rest.severity
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/alarms/{alarmId}/acknowledge
+      name: alarm-acknowledgment
+      description: Alarm acknowledgment operations
+      operations:
+      - method: POST
+        name: acknowledge-alarm
+        description: Acknowledge an active alarm with optional comment
+        call: factorytalk-optix.acknowledge-alarm
+        with:
+          alarmId: rest.alarmId
+          comment: rest.comment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/alarm-history
+      name: alarm-history
+      description: Historical alarm event data
+      operations:
+      - method: GET
+        name: get-alarm-history
+        description: Get alarm history within a time range
+        call: factorytalk-optix.get-alarm-history
+        with:
+          startTime: rest.startTime
+          endTime: rest.endTime
+          tagName: rest.tagName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/trends/{tagName}
+      name: trends
+      description: Historical trend data for process variables
+      operations:
+      - method: GET
+        name: get-trend-data
+        description: Get historical trend data for a tag
+        call: factorytalk-optix.get-trend-data
+        with:
+          tagName: rest.tagName
+          startTime: rest.startTime
+          endTime: rest.endTime
+          resolution: rest.resolution
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/recipes
+      name: recipes
+      description: Production recipe management
+      operations:
+      - method: GET
+        name: list-recipes
+        description: List all available production recipes
+        call: factorytalk-optix.list-recipes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/recipes/{recipeName}/apply
+      name: recipe-application
+      description: Apply a recipe to a production unit
+      operations:
+      - method: POST
+        name: apply-recipe
+        description: Apply a recipe to write configured tag values to a machine
+        call: factorytalk-optix.apply-recipe
+        with:
+          recipeName: rest.recipeName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9080
+    namespace: factorytalk-operations-mcp
+    transport: http
+    description: MCP server for AI-assisted industrial operations monitoring and control.
+    tools:
+    - name: list-tags
+      description: List all process variable tags defined in the FactoryTalk Optix project
+      hints:
+        readOnly: true
+        openWorld: true
+      call: factorytalk-optix.list-tags
+      with:
+        nameFilter: tools.nameFilter
+        tagType: tools.tagType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-tag-values
+      description: Read current values for one or more process variable tags in real-time
+      hints:
+        readOnly: true
+        openWorld: false
+      call: factorytalk-optix.read-tag-values
+      with:
+        names: tools.names
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: write-tag-values
+      description: Write values to one or more process variable tags to control machine state
+      hints:
+        readOnly: false
+        destructive: false
+      call: factorytalk-optix.write-tag-values
+      with:
+        writes: tools.writes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-tag-metadata
+      description: Get metadata and current value for a specific process variable tag
+      hints:
+        readOnly: true
+        openWorld: false
+      call: factorytalk-optix.get-tag
+      with:
+        tagName: tools.tagName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-active-alarms
+      description: List currently active and unacknowledged alarms on the production line
+      hints:
+        readOnly: true
+        openWorld: true
+      call: factorytalk-optix.list-alarms
+      with:
+        status: ACTIVE
+        severity: tools.severity
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: acknowledge-alarm
+      description: Acknowledge an active alarm with an operator comment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: factorytalk-optix.acknowledge-alarm
+      with:
+        alarmId: tools.alarmId
+        comment: tools.comment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-alarm-history
+      description: Retrieve alarm event history for a time range to investigate recurring issues
+      hints:
+        readOnly: true
+        openWorld: false
+      call: factorytalk-optix.get-alarm-history
+      with:
+        startTime: tools.startTime
+        endTime: tools.endTime
+        tagName: tools.tagName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trend-data
+      description: Get historical trend data for a process variable tag over a time range
+      hints:
+        readOnly: true
+        openWorld: false
+      call: factorytalk-optix.get-trend-data
+      with:
+        tagName: tools.tagName
+        startTime: tools.startTime
+        endTime: tools.endTime
+        resolution: tools.resolution
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-recipes
+      description: List all available production recipes and their parameters
+      hints:
+        readOnly: true
+        openWorld: true
+      call: factorytalk-optix.list-recipes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apply-recipe
+      description: Apply a production recipe to a machine or unit, writing all configured tag values
+      hints:
+        readOnly: false
+        destructive: false
+      call: factorytalk-optix.apply-recipe
+      with:
+        recipeName: tools.recipeName
+      outputParameters:
+      - type: object
+        mapping: $.
