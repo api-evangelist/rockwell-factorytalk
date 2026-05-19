@@ -1,0 +1,201 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rockwell FactoryTalk Optix REST API — Alarms
+  description: 'Rockwell FactoryTalk Optix REST API — Alarms. 3 operations. Lead operation: List Active Alarms. Self-contained
+    Naftiko capability covering one Rockwell Factorytalk business surface.'
+  tags:
+  - Rockwell Factorytalk
+  - Alarms
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROCKWELL_FACTORYTALK_API_KEY: ROCKWELL_FACTORYTALK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: optix-alarms
+    baseUri: https://{host}/api/v1
+    description: Rockwell FactoryTalk Optix REST API — Alarms business capability. Self-contained, no shared references.
+    resources:
+    - name: alarms
+      path: /alarms
+      operations:
+      - name: listalarms
+        method: GET
+        description: List Active Alarms
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by alarm status
+        - name: severity
+          in: query
+          type: string
+          description: Minimum severity to return
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+    - name: alarms-history
+      path: /alarms/history
+      operations:
+      - name: getalarmhistory
+        method: GET
+        description: Get Alarm History
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startTime
+          in: query
+          type: string
+          required: true
+        - name: endTime
+          in: query
+          type: string
+          required: true
+        - name: tagName
+          in: query
+          type: string
+          description: Filter to specific tag
+        - name: limit
+          in: query
+          type: integer
+    - name: alarms-alarmId-acknowledge
+      path: /alarms/{alarmId}/acknowledge
+      operations:
+      - name: acknowledgealarm
+        method: POST
+        description: Acknowledge an Alarm
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: alarmId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.ROCKWELL_FACTORYTALK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: optix-alarms-rest
+    port: 8080
+    description: REST adapter for Rockwell FactoryTalk Optix REST API — Alarms. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/alarms
+      name: alarms
+      description: REST surface for alarms.
+      operations:
+      - method: GET
+        name: listalarms
+        description: List Active Alarms
+        call: optix-alarms.listalarms
+        with:
+          status: rest.status
+          severity: rest.severity
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/alarms/history
+      name: alarms-history
+      description: REST surface for alarms-history.
+      operations:
+      - method: GET
+        name: getalarmhistory
+        description: Get Alarm History
+        call: optix-alarms.getalarmhistory
+        with:
+          startTime: rest.startTime
+          endTime: rest.endTime
+          tagName: rest.tagName
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/alarms/{alarmid}/acknowledge
+      name: alarms-alarmid-acknowledge
+      description: REST surface for alarms-alarmId-acknowledge.
+      operations:
+      - method: POST
+        name: acknowledgealarm
+        description: Acknowledge an Alarm
+        call: optix-alarms.acknowledgealarm
+        with:
+          alarmId: rest.alarmId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: optix-alarms-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rockwell FactoryTalk Optix REST API — Alarms. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-active-alarms
+      description: List Active Alarms
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-alarms.listalarms
+      with:
+        status: tools.status
+        severity: tools.severity
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-alarm-history
+      description: Get Alarm History
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-alarms.getalarmhistory
+      with:
+        startTime: tools.startTime
+        endTime: tools.endTime
+        tagName: tools.tagName
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: acknowledge-alarm
+      description: Acknowledge an Alarm
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: optix-alarms.acknowledgealarm
+      with:
+        alarmId: tools.alarmId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

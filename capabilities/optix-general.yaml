@@ -1,0 +1,203 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rockwell FactoryTalk Optix REST API
+  description: 'Rockwell FactoryTalk Optix REST API. 4 operations. Lead operation: List Tags. Self-contained Naftiko capability
+    covering one Rockwell Factorytalk business surface.'
+  tags:
+  - Rockwell Factorytalk
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROCKWELL_FACTORYTALK_API_KEY: ROCKWELL_FACTORYTALK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: optix-general
+    baseUri: https://{host}/api/v1
+    description: Rockwell FactoryTalk Optix REST API business capability. Self-contained, no shared references.
+    resources:
+    - name: tags
+      path: /tags
+      operations:
+      - name: listtags
+        method: GET
+        description: List Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nameFilter
+          in: query
+          type: string
+          description: Wildcard filter for tag names
+        - name: tagType
+          in: query
+          type: string
+          description: Filter by tag type
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+    - name: tags-values
+      path: /tags/values
+      operations:
+      - name: readtagvalues
+        method: GET
+        description: Read Multiple Tag Values
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: names
+          in: query
+          type: string
+          description: Comma-separated list of tag names to read
+          required: true
+      - name: writetagvalues
+        method: POST
+        description: Write Multiple Tag Values
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tags-tagName
+      path: /tags/{tagName}
+      operations:
+      - name: gettag
+        method: GET
+        description: Get Tag Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.ROCKWELL_FACTORYTALK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: optix-general-rest
+    port: 8080
+    description: REST adapter for Rockwell FactoryTalk Optix REST API. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/tags
+      name: tags
+      description: REST surface for tags.
+      operations:
+      - method: GET
+        name: listtags
+        description: List Tags
+        call: optix-general.listtags
+        with:
+          nameFilter: rest.nameFilter
+          tagType: rest.tagType
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tags/values
+      name: tags-values
+      description: REST surface for tags-values.
+      operations:
+      - method: GET
+        name: readtagvalues
+        description: Read Multiple Tag Values
+        call: optix-general.readtagvalues
+        with:
+          names: rest.names
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: writetagvalues
+        description: Write Multiple Tag Values
+        call: optix-general.writetagvalues
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tags/{tagname}
+      name: tags-tagname
+      description: REST surface for tags-tagName.
+      operations:
+      - method: GET
+        name: gettag
+        description: Get Tag Metadata
+        call: optix-general.gettag
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: optix-general-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rockwell FactoryTalk Optix REST API. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-tags
+      description: List Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-general.listtags
+      with:
+        nameFilter: tools.nameFilter
+        tagType: tools.tagType
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-multiple-tag-values
+      description: Read Multiple Tag Values
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-general.readtagvalues
+      with:
+        names: tools.names
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: write-multiple-tag-values
+      description: Write Multiple Tag Values
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: optix-general.writetagvalues
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-tag-metadata
+      description: Get Tag Metadata
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-general.gettag
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,111 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rockwell FactoryTalk Optix REST API — Recipes
+  description: 'Rockwell FactoryTalk Optix REST API — Recipes. 2 operations. Lead operation: List Recipes. Self-contained
+    Naftiko capability covering one Rockwell Factorytalk business surface.'
+  tags:
+  - Rockwell Factorytalk
+  - Recipes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROCKWELL_FACTORYTALK_API_KEY: ROCKWELL_FACTORYTALK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: optix-recipes
+    baseUri: https://{host}/api/v1
+    description: Rockwell FactoryTalk Optix REST API — Recipes business capability. Self-contained, no shared references.
+    resources:
+    - name: recipes
+      path: /recipes
+      operations:
+      - name: listrecipes
+        method: GET
+        description: List Recipes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: recipes-recipeName-apply
+      path: /recipes/{recipeName}/apply
+      operations:
+      - name: applyrecipe
+        method: POST
+        description: Apply a Recipe
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: recipeName
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ROCKWELL_FACTORYTALK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: optix-recipes-rest
+    port: 8080
+    description: REST adapter for Rockwell FactoryTalk Optix REST API — Recipes. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/recipes
+      name: recipes
+      description: REST surface for recipes.
+      operations:
+      - method: GET
+        name: listrecipes
+        description: List Recipes
+        call: optix-recipes.listrecipes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/recipes/{recipename}/apply
+      name: recipes-recipename-apply
+      description: REST surface for recipes-recipeName-apply.
+      operations:
+      - method: POST
+        name: applyrecipe
+        description: Apply a Recipe
+        call: optix-recipes.applyrecipe
+        with:
+          recipeName: rest.recipeName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: optix-recipes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rockwell FactoryTalk Optix REST API — Recipes. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-recipes
+      description: List Recipes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: optix-recipes.listrecipes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apply-recipe
+      description: Apply a Recipe
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: optix-recipes.applyrecipe
+      with:
+        recipeName: tools.recipeName
+      outputParameters:
+      - type: object
+        mapping: $.
