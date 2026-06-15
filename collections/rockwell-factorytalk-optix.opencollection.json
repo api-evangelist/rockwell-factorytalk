@@ -1,0 +1,301 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rockwell FactoryTalk Optix REST API",
+    "version": "1.5.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://optix.example.com/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/tags",
+            "params": [
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Wildcard filter for tag names"
+              },
+              {
+                "name": "tagType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag type"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all tags (variables) defined in the FactoryTalk Optix project."
+        },
+        {
+          "info": {
+            "name": "Read Multiple Tag Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/tags/values",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of tag names to read"
+              }
+            ]
+          },
+          "docs": "Reads current values for a list of tags in a single request."
+        },
+        {
+          "info": {
+            "name": "Write Multiple Tag Values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{host}/api/v1/tags/values",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Writes values to one or more tags. Requires write permission on each tag."
+        },
+        {
+          "info": {
+            "name": "Get Tag Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/tags/:tagName",
+            "params": [
+              {
+                "name": "tagName",
+                "value": "",
+                "type": "path",
+                "description": "Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)"
+              }
+            ]
+          },
+          "docs": "Returns metadata and current value for a specific tag."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Alarms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Active Alarms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/alarms",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by alarm status"
+              },
+              {
+                "name": "severity",
+                "value": "",
+                "type": "query",
+                "description": "Minimum severity to return"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns currently active and unacknowledged alarms."
+        },
+        {
+          "info": {
+            "name": "Acknowledge an Alarm",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{host}/api/v1/alarms/:alarmId/acknowledge",
+            "params": [
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Acknowledges an active alarm, optionally with a comment."
+        },
+        {
+          "info": {
+            "name": "Get Alarm History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/alarms/history",
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tagName",
+                "value": "",
+                "type": "query",
+                "description": "Filter to specific tag"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns historical alarm events within a time range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TrendData",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Historical Trend Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/trends/:tagName",
+            "params": [
+              {
+                "name": "tagName",
+                "value": "",
+                "type": "path",
+                "description": "Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "query",
+                "description": "Data resolution (e.g., 1s, 1m, 1h)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns historical trending data for a tag within a time range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Recipes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Recipes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{host}/api/v1/recipes"
+          },
+          "docs": "Returns recipes defined in the FactoryTalk Optix project."
+        },
+        {
+          "info": {
+            "name": "Apply a Recipe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{host}/api/v1/recipes/:recipeName/apply",
+            "params": [
+              {
+                "name": "recipeName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Applies a recipe to a machine or unit, writing configured tag values."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
