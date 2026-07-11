@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/rockwell-factorytalk-optix-openapi.yml
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://optix.example.com/auth/token
+    scopes: 3
+  sources:
+  - openapi/rockwell-factorytalk-optix-openapi.yml
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: X-Api-Key
+  description: FactoryTalk Optix API key
+  sources:
+  - openapi/rockwell-factorytalk-optix-openapi.yml
