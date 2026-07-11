@@ -59,6 +59,10 @@ apis:
       allowing version control integration, CI/CD pipeline automation, and export of L5X controller files for PLC
       program management.
 common:
+  - type: Authentication
+    url: authentication/rockwell-factorytalk-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rockwell-factorytalk-scopes.yml
   - url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
     type: Portal
   - url: https://docs.rockwellautomation.com/en/products/software/factorytalk/

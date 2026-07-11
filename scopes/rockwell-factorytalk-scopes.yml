@@ -1,0 +1,28 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/rockwell-factorytalk-optix-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/rockwell-factorytalk-optix-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://optix.example.com/auth/token
+scopes:
+- scope: optix.admin
+  description: Manage recipes and project configuration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/rockwell-factorytalk-optix-openapi.yml
+- scope: optix.read
+  description: Read tag values and alarm data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/rockwell-factorytalk-optix-openapi.yml
+- scope: optix.write
+  description: Write tag values
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/rockwell-factorytalk-optix-openapi.yml
