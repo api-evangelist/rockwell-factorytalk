@@ -59,6 +59,8 @@ apis:
       allowing version control integration, CI/CD pipeline automation, and export of L5X controller files for PLC
       program management.
 common:
+  - type: AgenticAccess
+    url: agentic-access/rockwell-factorytalk-agentic-access.yml
   - type: DomainSecurity
     url: security/rockwell-factorytalk-domain-security.yml
   - type: Authentication
