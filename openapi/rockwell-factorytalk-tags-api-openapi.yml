@@ -1,0 +1,292 @@
+openapi: 3.1.0
+info:
+  title: Rockwell FactoryTalk Optix REST Alarms Tags API
+  description: Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.
+  version: 1.5.0
+  contact:
+    name: Rockwell Automation Support
+    url: https://www.rockwellautomation.com/en-us/support/
+  license:
+    name: Rockwell Automation Software License
+    url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/
+servers:
+- url: https://{host}/api/v1
+  description: FactoryTalk Optix REST API
+  variables:
+    host:
+      default: optix.example.com
+      description: FactoryTalk Optix server hostname
+security:
+- oauth2: []
+- apiKey: []
+tags:
+- name: Tags
+paths:
+  /tags:
+    get:
+      operationId: listTags
+      summary: List Tags
+      description: Returns all tags (variables) defined in the FactoryTalk Optix project.
+      tags:
+      - Tags
+      parameters:
+      - name: nameFilter
+        in: query
+        description: Wildcard filter for tag names
+        schema:
+          type: string
+      - name: tagType
+        in: query
+        description: Filter by tag type
+        schema:
+          type: string
+          enum:
+          - Bool
+          - Int16
+          - Int32
+          - Int64
+          - UInt16
+          - UInt32
+          - UInt64
+          - Float
+          - Double
+          - String
+          - DateTime
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 1000
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Tag list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                  totalCount:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tags/values:
+    get:
+      operationId: readTagValues
+      summary: Read Multiple Tag Values
+      description: Reads current values for a list of tags in a single request.
+      tags:
+      - Tags
+      parameters:
+      - name: names
+        in: query
+        required: true
+        description: Comma-separated list of tag names to read
+        schema:
+          type: string
+          example: Conveyor1.Speed,Pump1.Flow,Reactor1.Temperature
+      responses:
+        '200':
+          description: Tag values
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  values:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TagValue'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: writeTagValues
+      summary: Write Multiple Tag Values
+      description: Writes values to one or more tags. Requires write permission on each tag.
+      tags:
+      - Tags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - writes
+              properties:
+                writes:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - value
+                    properties:
+                      name:
+                        type: string
+                        description: Tag name
+                      value:
+                        description: Value to write (type must match tag data type)
+      responses:
+        '200':
+          description: Write results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        success:
+                          type: boolean
+                        error:
+                          type: string
+                          nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /tags/{tagName}:
+    get:
+      operationId: getTag
+      summary: Get Tag Metadata
+      description: Returns metadata and current value for a specific tag.
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/TagName'
+      responses:
+        '200':
+          description: Tag details with current value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    TagValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          description: Current tag value (type depends on tag dataType)
+        quality:
+          type: string
+          enum:
+          - GOOD
+          - BAD
+          - UNCERTAIN
+          - COMM_FAILURE
+        timestamp:
+          type: string
+          format: date-time
+    Tag:
+      type: object
+      description: A FactoryTalk Optix tag (process variable)
+      properties:
+        name:
+          type: string
+          description: Fully qualified tag name
+        displayName:
+          type: string
+        description:
+          type: string
+        dataType:
+          type: string
+          enum:
+          - Bool
+          - Int16
+          - Int32
+          - Int64
+          - UInt16
+          - UInt32
+          - UInt64
+          - Float
+          - Double
+          - String
+          - DateTime
+        engineeringUnit:
+          type: string
+          description: Unit of measure (e.g., RPM, °C, bar)
+        readOnly:
+          type: boolean
+        alarmEnabled:
+          type: boolean
+        deadband:
+          type: number
+          format: double
+          nullable: true
+    TagDetail:
+      allOf:
+      - $ref: '#/components/schemas/Tag'
+      - type: object
+        properties:
+          currentValue:
+            $ref: '#/components/schemas/TagValue'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://optix.example.com/auth/token
+          scopes:
+            optix.read: Read tag values and alarm data
+            optix.write: Write tag values
+            optix.admin: Manage recipes and project configuration
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: FactoryTalk Optix API key

@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: Rockwell FactoryTalk Optix REST Alarms Recipes API
+  description: Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.
+  version: 1.5.0
+  contact:
+    name: Rockwell Automation Support
+    url: https://www.rockwellautomation.com/en-us/support/
+  license:
+    name: Rockwell Automation Software License
+    url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/
+servers:
+- url: https://{host}/api/v1
+  description: FactoryTalk Optix REST API
+  variables:
+    host:
+      default: optix.example.com
+      description: FactoryTalk Optix server hostname
+security:
+- oauth2: []
+- apiKey: []
+tags:
+- name: Recipes
+  description: Recipe management
+paths:
+  /recipes:
+    get:
+      operationId: listRecipes
+      summary: List Recipes
+      description: Returns recipes defined in the FactoryTalk Optix project.
+      tags:
+      - Recipes
+      responses:
+        '200':
+          description: Recipe list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recipes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recipe'
+  /recipes/{recipeName}/apply:
+    post:
+      operationId: applyRecipe
+      summary: Apply a Recipe
+      description: Applies a recipe to a machine or unit, writing configured tag values.
+      tags:
+      - Recipes
+      parameters:
+      - name: recipeName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Recipe applied successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+    Recipe:
+      type: object
+      description: A FactoryTalk Optix recipe defining a set of tag values
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        parameters:
+          type: array
+          description: Tag-value pairs that make up the recipe
+          items:
+            type: object
+            properties:
+              tagName:
+                type: string
+              value:
+                description: Recipe parameter value
+              units:
+                type: string
+        lastModified:
+          type: string
+          format: date-time
+        modifiedBy:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://optix.example.com/auth/token
+          scopes:
+            optix.read: Read tag values and alarm data
+            optix.write: Write tag values
+            optix.admin: Manage recipes and project configuration
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: FactoryTalk Optix API key
