@@ -135,7 +135,7 @@ common:
     type: PrivacyPolicy
   - url: https://github.com/rockwellautomation
     type: GitHubOrganization
-  - url: openapi/rockwell-factorytalk-optix-openapi.yml
+  - url: openapi/_original/rockwell-factorytalk-optix-openapi.yml
     type: OpenAPI
   - url: asyncapi/rockwell-factorytalk-realtime-asyncapi.yml
     type: AsyncAPI
