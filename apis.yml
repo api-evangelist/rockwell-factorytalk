@@ -1,4 +1,5 @@
 aid: rockwell-factorytalk
+specificationVersion: '0.23'
 accessModel:
   pricing: enterprise
   onboarding: self-serve
