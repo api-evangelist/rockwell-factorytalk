@@ -1,0 +1,586 @@
+{
+  "item": [
+    {
+      "id": "b05a2e57-93bc-4667-b452-12d31143dcc3",
+      "name": "Alarms",
+      "description": {
+        "content": "Alarm and event management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "560dd661-1faf-4db5-b3e7-6a3ae66ad68c",
+          "name": "List Active Alarms",
+          "request": {
+            "name": "List Active Alarms",
+            "description": {
+              "content": "Returns currently active and unacknowledged alarms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by alarm status"
+                },
+                {
+                  "disabled": false,
+                  "key": "severity",
+                  "value": "<string>",
+                  "description": "Minimum severity to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6dc319a1-516c-4214-a17b-cc7bfa75e4c6",
+              "name": "Active alarm list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severity",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alarms\": [\n    {\n      \"alarmId\": \"string\",\n      \"tagName\": \"string\",\n      \"alarmName\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"NORMAL\",\n      \"severity\": \"MEDIUM\",\n      \"activationTime\": \"1955-10-23T16:58:35.883Z\",\n      \"acknowledgmentTime\": \"1989-09-03T07:12:46.726Z\",\n      \"acknowledgedBy\": \"string\",\n      \"triggerValue\": {},\n      \"setpoint\": {}\n    },\n    {\n      \"alarmId\": \"string\",\n      \"tagName\": \"string\",\n      \"alarmName\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"ACTIVE\",\n      \"severity\": \"MEDIUM\",\n      \"activationTime\": \"1996-01-17T15:15:49.884Z\",\n      \"acknowledgmentTime\": \"2025-04-15T04:00:36.451Z\",\n      \"acknowledgedBy\": \"string\",\n      \"triggerValue\": {},\n      \"setpoint\": {}\n    }\n  ],\n  \"totalCount\": 9695\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffb5b1fb-3e77-4fd3-83c9-87d3122830c2",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "severity",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e17fae8a-b352-4402-a8e6-c79520d9ca89",
+          "name": "Acknowledge an Alarm",
+          "request": {
+            "name": "Acknowledge an Alarm",
+            "description": {
+              "content": "Acknowledges an active alarm, optionally with a comment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                ":alarmId",
+                "acknowledge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "alarmId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9282e6d2-343c-460d-85e0-8d82b349803d",
+              "name": "Alarm acknowledged",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "acknowledge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "alarmId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0ef2253-5956-40b9-a611-78b6989dabe1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "acknowledge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "alarmId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1597754-dc83-438c-8db6-f4f311401952",
+          "name": "Get Alarm History",
+          "request": {
+            "name": "Get Alarm History",
+            "description": {
+              "content": "Returns historical alarm events within a time range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "tagName",
+                  "value": "<string>",
+                  "description": "Filter to specific tag"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "500"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8afd80f-7adc-4ef7-8826-d5989b3163ea",
+              "name": "Alarm history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "tagName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alarmEvents\": [\n    {\n      \"eventId\": \"string\",\n      \"alarmId\": \"string\",\n      \"tagName\": \"string\",\n      \"alarmName\": \"string\",\n      \"eventType\": \"ACKNOWLEDGED\",\n      \"timestamp\": \"1984-06-30T02:27:27.533Z\",\n      \"value\": {},\n      \"user\": \"string\",\n      \"comment\": \"string\"\n    },\n    {\n      \"eventId\": \"string\",\n      \"alarmId\": \"string\",\n      \"tagName\": \"string\",\n      \"alarmName\": \"string\",\n      \"eventType\": \"ACKNOWLEDGED\",\n      \"timestamp\": \"2012-06-27T01:06:29.429Z\",\n      \"value\": {},\n      \"user\": \"string\",\n      \"comment\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "FactoryTalk Optix server hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "optix.example.com",
+      "key": "host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{host}}/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "optix.read optix.write optix.admin"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://optix.example.com/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f6d16834-91de-4602-886c-5776c645b99f",
+    "name": "Rockwell FactoryTalk Optix REST Alarms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.\n\nContact Support:\n Name: Rockwell Automation Support",
+      "type": "text/plain"
+    }
+  }
+}

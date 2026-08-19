@@ -1,0 +1,315 @@
+{
+  "item": [
+    {
+      "id": "7e787e00-359d-4f46-b9e3-3def27b546cd",
+      "name": "Recipes",
+      "description": {
+        "content": "Recipe management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fbfe84a3-0873-4bf8-b941-67885c983336",
+          "name": "List Recipes",
+          "request": {
+            "name": "List Recipes",
+            "description": {
+              "content": "Returns recipes defined in the FactoryTalk Optix project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recipes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8a7ae74-39b1-4607-93f6-67b5b6290c10",
+              "name": "Recipe list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recipes\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"parameters\": [\n        {\n          \"tagName\": \"string\",\n          \"value\": {},\n          \"units\": \"string\"\n        },\n        {\n          \"tagName\": \"string\",\n          \"value\": {},\n          \"units\": \"string\"\n        }\n      ],\n      \"lastModified\": \"2023-12-23T14:27:40.513Z\",\n      \"modifiedBy\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"string\",\n      \"parameters\": [\n        {\n          \"tagName\": \"string\",\n          \"value\": {},\n          \"units\": \"string\"\n        },\n        {\n          \"tagName\": \"string\",\n          \"value\": {},\n          \"units\": \"string\"\n        }\n      ],\n      \"lastModified\": \"1953-12-02T12:23:10.007Z\",\n      \"modifiedBy\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41b83e3a-f1b8-4242-be0b-d2ae9444b409",
+          "name": "Apply a Recipe",
+          "request": {
+            "name": "Apply a Recipe",
+            "description": {
+              "content": "Applies a recipe to a machine or unit, writing configured tag values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recipes",
+                ":recipeName",
+                "apply"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "recipeName",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef7d3ee1-e9a1-4439-9a47-ecfdb048dea5",
+              "name": "Recipe applied successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recipes",
+                    ":recipeName",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recipeName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "19b753c0-2b42-41d3-944d-9c2390a7cf10",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recipes",
+                    ":recipeName",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "recipeName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "FactoryTalk Optix server hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "optix.example.com",
+      "key": "host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{host}}/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "optix.read optix.write optix.admin"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://optix.example.com/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fabff7ee-29a2-4c20-9fab-8bdc765afc57",
+    "name": "Rockwell FactoryTalk Optix REST Alarms Recipes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.\n\nContact Support:\n Name: Rockwell Automation Support",
+      "type": "text/plain"
+    }
+  }
+}

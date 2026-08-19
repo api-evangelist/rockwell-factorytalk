@@ -1,0 +1,282 @@
+{
+  "item": [
+    {
+      "id": "b281ff3f-1ab1-4612-9921-f447f7ac04e6",
+      "name": "TrendData",
+      "description": {
+        "content": "Historical trend data retrieval",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4fd75d00-125c-4c21-83f9-5dc842b60da2",
+          "name": "Get Historical Trend Data",
+          "request": {
+            "name": "Get Historical Trend Data",
+            "description": {
+              "content": "Returns historical trending data for a tag within a time range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trends",
+                ":tagName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "resolution",
+                  "value": "1m",
+                  "description": "Data resolution (e.g., 1s, 1m, 1h)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tagName",
+                  "description": "(Required) Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)"
+                },
+                {
+                  "description": "FactoryTalk Optix server hostname",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d31a865-516d-4227-9864-078373160329",
+              "name": "Trend data points",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trends",
+                    ":tagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "1m"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tagName",
+                      "description": "(Required) Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)"
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tagName\": \"string\",\n  \"dataPoints\": [\n    {\n      \"timestamp\": \"1999-08-28T12:19:44.880Z\",\n      \"value\": {},\n      \"quality\": \"BAD\"\n    },\n    {\n      \"timestamp\": \"1985-04-12T15:08:21.685Z\",\n      \"value\": {},\n      \"quality\": \"BAD\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fb37202-760f-41c1-86ae-baa3c28a16c5",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trends",
+                    ":tagName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "resolution",
+                      "value": "1m"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tagName",
+                      "description": "(Required) Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)"
+                    },
+                    {
+                      "description": "FactoryTalk Optix server hostname",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "FactoryTalk Optix server hostname",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "optix.example.com",
+      "key": "host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{host}}/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "optix.read optix.write optix.admin"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://optix.example.com/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3c3bebbc-2726-4654-a7f8-ea1ceeb1c4d7",
+    "name": "Rockwell FactoryTalk Optix REST Alarms TrendData API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.\n\nContact Support:\n Name: Rockwell Automation Support",
+      "type": "text/plain"
+    }
+  }
+}
