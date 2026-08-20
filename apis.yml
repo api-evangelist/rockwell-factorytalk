@@ -106,6 +106,8 @@ apis:
     https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
+  - Trend Data
+  tags_raw:
   - TrendData
   properties:
   - type: OpenAPI
