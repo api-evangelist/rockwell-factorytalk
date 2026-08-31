@@ -35,8 +35,6 @@ apis:
   - Cloud
   - Manufacturing
   - REST
-  image: >-
-    https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
   humanURL: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
   baseURL: https://api.factorytalk.example.com
   properties:
@@ -56,8 +54,6 @@ apis:
   - PLC
   - Programming
   - REST
-  image: >-
-    https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/image.png
   humanURL: https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools
   baseURL: https://api.factorytalk.example.com
   properties:
@@ -118,7 +114,7 @@ apis:
     https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
-  - Trend Data
+  - TrendData
   tags_raw:
   - TrendData
   properties:
