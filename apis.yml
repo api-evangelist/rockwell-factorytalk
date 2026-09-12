@@ -167,3 +167,5 @@ modified: '2026-05-19'
 description: >-
   Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation that supports the design, operation,
   and maintenance of industrial control systems and connected manufacturing operations.
+x-parent: rockwell-automation
+x-relationship: product

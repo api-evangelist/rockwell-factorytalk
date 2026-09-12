@@ -15,6 +15,12 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "rockwell-factorytalk-alarms-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rockwell-factorytalk-recipes-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rockwell-factorytalk-tags-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rockwell-factorytalk-trenddata-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
