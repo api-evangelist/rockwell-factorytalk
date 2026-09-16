@@ -1,5 +1,5 @@
 aid: rockwell-factorytalk
-name: "Rockwell FactoryTalk"
+name: Rockwell FactoryTalk
 deliveryModel:
   model: library
   open_source: false
@@ -42,10 +42,9 @@ apis:
     type: Documentation
   - url: asyncapi/rockwell-factorytalk-realtime-asyncapi.yml
     type: AsyncAPI
-  description: >-
-    Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk software
-    applications, enabling centralized identity management, software licensing, and connected factory
-    services.
+  description: Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk
+    software applications, enabling centralized identity management, software licensing, and connected
+    factory services.
 - aid: rockwell-factorytalk:logix-designer-api
   name: Rockwell FactoryTalk Logix Designer API
   tags:
@@ -61,15 +60,13 @@ apis:
     type: Documentation
   - url: https://github.com/rockwellautomation/ra-logix-cicd
     type: SDKs
-  description: >-
-    Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller programming,
-    allowing version control integration, CI/CD pipeline automation, and export of L5X controller files
-    for PLC program management.
+  description: Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller
+    programming, allowing version control integration, CI/CD pipeline automation, and export of L5X controller
+    files for PLC program management.
 - aid: rockwell-factorytalk:rockwell-factorytalk-alarms-api
   name: rockwell-factorytalk Alarms API
   description: Alarm and event management
-  humanURL: >-
-    https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+  humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
   - Alarms
@@ -77,13 +74,11 @@ apis:
   - type: OpenAPI
     url: openapi/rockwell-factorytalk-alarms-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+    url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
 - aid: rockwell-factorytalk:rockwell-factorytalk-recipes-api
   name: rockwell-factorytalk Recipes API
   description: Recipe management
-  humanURL: >-
-    https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+  humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
   - Recipes
@@ -91,13 +86,11 @@ apis:
   - type: OpenAPI
     url: openapi/rockwell-factorytalk-recipes-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+    url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
 - aid: rockwell-factorytalk:rockwell-factorytalk-tags-api
   name: rockwell-factorytalk Tags API
   description: The Tags API from rockwell-factorytalk — 3 operation(s) for tags.
-  humanURL: >-
-    https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+  humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
   - Tags
@@ -105,13 +98,11 @@ apis:
   - type: OpenAPI
     url: openapi/rockwell-factorytalk-tags-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+    url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
 - aid: rockwell-factorytalk:rockwell-factorytalk-trenddata-api
   name: rockwell-factorytalk TrendData API
   description: Historical trend data retrieval
-  humanURL: >-
-    https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+  humanURL: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
   baseURL: https://api.factorytalk.example.com
   tags:
   - Trend Data
@@ -121,51 +112,54 @@ apis:
   - type: OpenAPI
     url: openapi/rockwell-factorytalk-trenddata-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
+    url: https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html
 common:
-  - type: AgenticAccess
-    url: agentic-access/rockwell-factorytalk-agentic-access.yml
-  - type: DomainSecurity
-    url: security/rockwell-factorytalk-domain-security.yml
-  - type: Authentication
-    url: authentication/rockwell-factorytalk-authentication.yml
-  - type: OAuthScopes
-    url: scopes/rockwell-factorytalk-scopes.yml
-  - url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
-    type: Portal
-  - url: https://docs.rockwellautomation.com/en/products/software/factorytalk/
-    type: Documentation
-  - url: https://www.rockwellautomation.com/en-us/
-    type: Website
-  - url: https://www.rockwellautomation.com/en-us/support/
-    type: Support
-  - url: https://www.rockwellautomation.com/en-us/company/news/blogs/
-    type: Blog
-  - url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html
-    type: PrivacyPolicy
-  - url: https://github.com/rockwellautomation
-    type: GitHubOrganization
-  - url: openapi/_original/rockwell-factorytalk-optix-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/rockwell-factorytalk-realtime-asyncapi.yml
-    type: AsyncAPI
-  - url: json-schema/rockwell-factorytalk-tag-schema.json
-    type: JSONSchema
-  - url: json-ld/rockwell-factorytalk-context.jsonld
-    type: JSONLDContext
-  - url: json-structure/rockwell-factorytalk-structure.json
-    type: JSONStructure
-  - url: vocabulary/rockwell-factorytalk-vocabulary.yml
-    type: Vocabulary
-  - url: rules/rockwell-factorytalk-rules.yml
-    type: SpectralRuleset
+- type: AgenticAccess
+  url: agentic-access/rockwell-factorytalk-agentic-access.yml
+- type: DomainSecurity
+  url: security/rockwell-factorytalk-domain-security.yml
+- type: Authentication
+  url: authentication/rockwell-factorytalk-authentication.yml
+- type: OAuthScopes
+  url: scopes/rockwell-factorytalk-scopes.yml
+- url: https://www.rockwellautomation.com/en-us/products/software/factorytalk.html
+  type: Portal
+- url: https://docs.rockwellautomation.com/en/products/software/factorytalk/
+  type: Documentation
+- url: https://www.rockwellautomation.com/en-us/
+  type: Website
+- url: https://www.rockwellautomation.com/en-us/support/
+  type: Support
+- url: https://www.rockwellautomation.com/en-us/company/news/blogs/
+  type: Blog
+- url: https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html
+  type: PrivacyPolicy
+- url: https://github.com/rockwellautomation
+  type: GitHubOrganization
+- url: openapi/_original/rockwell-factorytalk-optix-openapi.yml
+  type: OpenAPI
+- url: asyncapi/rockwell-factorytalk-realtime-asyncapi.yml
+  type: AsyncAPI
+- url: json-schema/rockwell-factorytalk-tag-schema.json
+  type: JSONSchema
+- url: json-ld/rockwell-factorytalk-context.jsonld
+  type: JSONLDContext
+- url: json-structure/rockwell-factorytalk-structure.json
+  type: JSONStructure
+- url: vocabulary/rockwell-factorytalk-vocabulary.yml
+  type: Vocabulary
+- url: rules/rockwell-factorytalk-rules.yml
+  type: SpectralRuleset
 maintainers:
-  - name: Kin Lane
-    email: kin@apievangelist.com
-modified: '2026-05-19'
-description: >-
-  Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation that supports the design, operation,
-  and maintenance of industrial control systems and connected manufacturing operations.
+- name: Kin Lane
+  email: kin@apievangelist.com
+modified: '2026-09-16'
+description: Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation that supports
+  the design, operation, and maintenance of industrial control systems and connected manufacturing operations.
 x-parent: rockwell-automation
 x-relationship: product
+tags:
+- Automation
+- Manufacturing
+- Cloud
+- Recipes
