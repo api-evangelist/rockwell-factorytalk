@@ -1,10 +1,7 @@
 {
   "provider": "rockwell-factorytalk",
   "sources": [
-    "rockwell-factorytalk-alarms-api-openapi.yml",
-    "rockwell-factorytalk-recipes-api-openapi.yml",
-    "rockwell-factorytalk-tags-api-openapi.yml",
-    "rockwell-factorytalk-trenddata-api-openapi.yml"
+    "_original/rockwell-factorytalk-optix-openapi.yml"
   ],
   "outputs": [
     "rockwell-factorytalk-alarms-api-openapi.yml",
@@ -16,11 +13,19 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "rockwell-factorytalk-alarms-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "rockwell-factorytalk-recipes-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "rockwell-factorytalk-tags-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "rockwell-factorytalk-trenddata-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rockwell-factorytalk-optix-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rockwell-factorytalk-optix-openapi.yml: tagged paths GET /tags -> Tags",
+    "rockwell-factorytalk-optix-openapi.yml: tagged paths GET /tags/values -> Tags",
+    "rockwell-factorytalk-optix-openapi.yml: tagged paths POST /tags/values -> Tags",
+    "rockwell-factorytalk-optix-openapi.yml: tagged paths GET /tags/{tagName} -> Tags",
+    "rockwell-factorytalk-optix-openapi.yml: declared missing tag: Tags",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "rockwell-factorytalk-alarms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rockwell-factorytalk-recipes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rockwell-factorytalk-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rockwell-factorytalk-trenddata-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

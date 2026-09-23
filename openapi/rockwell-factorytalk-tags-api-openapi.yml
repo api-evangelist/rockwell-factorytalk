@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Rockwell FactoryTalk Optix REST Alarms Tags API
+  title: Rockwell FactoryTalk Optix REST Tags API
   description: Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.
   version: 1.5.0
   contact:
@@ -179,6 +179,13 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    TagDetail:
+      allOf:
+      - $ref: '#/components/schemas/Tag'
+      - type: object
+        properties:
+          currentValue:
+            $ref: '#/components/schemas/TagValue'
     TagValue:
       type: object
       properties:
@@ -232,13 +239,6 @@ components:
           type: number
           format: double
           nullable: true
-    TagDetail:
-      allOf:
-      - $ref: '#/components/schemas/Tag'
-      - type: object
-        properties:
-          currentValue:
-            $ref: '#/components/schemas/TagValue'
     Error:
       type: object
       properties:
@@ -248,23 +248,15 @@ components:
           type: string
         details:
           type: string
-  parameters:
-    TagName:
-      name: tagName
-      in: path
-      required: true
-      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
-      schema:
-        type: string
   responses:
-    Forbidden:
-      description: Insufficient permissions
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Forbidden:
+      description: Insufficient permissions
       content:
         application/json:
           schema:
@@ -275,6 +267,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

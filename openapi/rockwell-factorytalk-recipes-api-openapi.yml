@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Rockwell FactoryTalk Optix REST Alarms Recipes API
+  title: Rockwell FactoryTalk Optix REST Recipes API
   description: Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications deployed in industrial automation environments.
   version: 1.5.0
   contact:
@@ -61,6 +61,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -98,13 +105,6 @@ components:
           format: date-time
         modifiedBy:
           type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
