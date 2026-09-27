@@ -73,21 +73,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    TagName:
-      name: tagName
-      in: path
-      required: true
-      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
-      schema:
-        type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -112,6 +97,21 @@ components:
           - GOOD
           - BAD
           - UNCERTAIN
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
