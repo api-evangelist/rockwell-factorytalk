@@ -179,32 +179,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-    TagValue:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          description: Current tag value (type depends on tag dataType)
-        quality:
-          type: string
-          enum:
-          - GOOD
-          - BAD
-          - UNCERTAIN
-          - COMM_FAILURE
-        timestamp:
-          type: string
-          format: date-time
     TagDetail:
       allOf:
       - $ref: '#/components/schemas/Tag'
@@ -248,15 +222,39 @@ components:
           type: number
           format: double
           nullable: true
-  parameters:
-    TagName:
-      name: tagName
-      in: path
-      required: true
-      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
+    TagValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          description: Current tag value (type depends on tag dataType)
+        quality:
+          type: string
+          enum:
+          - GOOD
+          - BAD
+          - UNCERTAIN
+          - COMM_FAILURE
+        timestamp:
+          type: string
+          format: date-time
   responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Insufficient permissions
       content:
@@ -269,12 +267,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
