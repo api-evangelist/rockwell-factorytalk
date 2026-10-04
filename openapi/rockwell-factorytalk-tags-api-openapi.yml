@@ -179,13 +179,23 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    TagDetail:
-      allOf:
-      - $ref: '#/components/schemas/Tag'
-      - type: object
-        properties:
-          currentValue:
-            $ref: '#/components/schemas/TagValue'
+    TagValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          description: Current tag value (type depends on tag dataType)
+        quality:
+          type: string
+          enum:
+          - GOOD
+          - BAD
+          - UNCERTAIN
+          - COMM_FAILURE
+        timestamp:
+          type: string
+          format: date-time
     Tag:
       type: object
       description: A FactoryTalk Optix tag (process variable)
@@ -222,6 +232,13 @@ components:
           type: number
           format: double
           nullable: true
+    TagDetail:
+      allOf:
+      - $ref: '#/components/schemas/Tag'
+      - type: object
+        properties:
+          currentValue:
+            $ref: '#/components/schemas/TagValue'
     Error:
       type: object
       properties:
@@ -231,32 +248,23 @@ components:
           type: string
         details:
           type: string
-    TagValue:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          description: Current tag value (type depends on tag dataType)
-        quality:
-          type: string
-          enum:
-          - GOOD
-          - BAD
-          - UNCERTAIN
-          - COMM_FAILURE
-        timestamp:
-          type: string
-          format: date-time
+  parameters:
+    TagName:
+      name: tagName
+      in: path
+      required: true
+      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
+      schema:
+        type: string
   responses:
-    Unauthorized:
-      description: Authentication required
+    Forbidden:
+      description: Insufficient permissions
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions
+    Unauthorized:
+      description: Authentication required
       content:
         application/json:
           schema:
@@ -267,14 +275,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    TagName:
-      name: tagName
-      in: path
-      required: true
-      description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2
