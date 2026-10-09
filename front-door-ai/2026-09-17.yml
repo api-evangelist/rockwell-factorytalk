@@ -1,0 +1,29 @@
+# Front Door AI Index — rockwell-factorytalk — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: rockwell-factorytalk
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: www.rockwellautomation.com
+  final_host: www.rockwellautomation.com
+  ownership: shared
+  owner: rockwell-automation
+  shares_host_with:
+  - rockwell-automation
+  inherited_from: null
+  alias_of: null
+  verdict: silent
+  score: null
+  band: null
+  band_label: null
+  host_score: 0
+  density: null
+  words: 416
+  tiers:
+    agentic: 0
+    core: 0
+    model: 0
+  ambiguous: 1
+  top_terms:
+    automation: 1
