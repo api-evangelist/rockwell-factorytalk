@@ -146,7 +146,58 @@ paths:
                     items:
                       $ref: '#/components/schemas/AlarmEvent'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    AlarmEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+        alarmId:
+          type: string
+        tagName:
+          type: string
+        alarmName:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - ACTIVATED
+          - ACKNOWLEDGED
+          - RESET
+          - DISABLED
+        timestamp:
+          type: string
+          format: date-time
+        value:
+          description: Tag value at event time
+        user:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: string
     Alarm:
       type: object
       description: An active alarm condition
@@ -186,57 +237,6 @@ components:
           description: Tag value when alarm activated
         setpoint:
           description: Alarm setpoint/threshold value
-    AlarmEvent:
-      type: object
-      properties:
-        eventId:
-          type: string
-        alarmId:
-          type: string
-        tagName:
-          type: string
-        alarmName:
-          type: string
-        eventType:
-          type: string
-          enum:
-          - ACTIVATED
-          - ACKNOWLEDGED
-          - RESET
-          - DISABLED
-        timestamp:
-          type: string
-          format: date-time
-        value:
-          description: Tag value at event time
-        user:
-          type: string
-          nullable: true
-        comment:
-          type: string
-          nullable: true
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: string
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

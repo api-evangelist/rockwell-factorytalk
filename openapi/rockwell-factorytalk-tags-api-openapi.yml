@@ -178,24 +178,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    TagValue:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          description: Current tag value (type depends on tag dataType)
-        quality:
-          type: string
-          enum:
-          - GOOD
-          - BAD
-          - UNCERTAIN
-          - COMM_FAILURE
-        timestamp:
-          type: string
-          format: date-time
     Tag:
       type: object
       description: A FactoryTalk Optix tag (process variable)
@@ -239,6 +241,23 @@ components:
         properties:
           currentValue:
             $ref: '#/components/schemas/TagValue'
+    TagValue:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          description: Current tag value (type depends on tag dataType)
+        quality:
+          type: string
+          enum:
+          - GOOD
+          - BAD
+          - UNCERTAIN
+          - COMM_FAILURE
+        timestamp:
+          type: string
+          format: date-time
     Error:
       type: object
       properties:
@@ -256,25 +275,6 @@ components:
       description: Tag name (may use dot notation for nested tags, e.g. Conveyor1.Speed)
       schema:
         type: string
-  responses:
-    Forbidden:
-      description: Insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
