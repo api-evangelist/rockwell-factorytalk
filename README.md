@@ -1,4 +1,4 @@
-# rockwell-factorytalk (rockwell-factorytalk)
+# Rockwell FactoryTalk
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,95 +66,186 @@
 
 Rockwell FactoryTalk is a portfolio of software products by Rockwell Automation that supports the design, operation, and maintenance of industrial control systems and connected manufacturing operations.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/rockwell-factorytalk/refs/heads/main/apis.yml)
+**Areas:** Automation · Manufacturing · Cloud · Recipes
 
-## Timestamps
+## Rockwell FactoryTalk on APIs.io
 
-- **Modified:** 2026-05-19
+Everything profiled for Rockwell FactoryTalk is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/rockwell-factorytalk/](https://apis.io/providers/rockwell-factorytalk/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (6)
 
-### Rockwell FactoryTalk Optix REST API
+- [Rockwell FactoryTalk Hub API](https://apis.io/apis/rockwell-factorytalk/factorytalk-hub-api/) — Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk software applications, enabling centralized identity…
+- [Rockwell FactoryTalk Logix Designer API](https://apis.io/apis/rockwell-factorytalk/logix-designer-api/) — Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller programming, allowing version control integration, CI/CD…
+- [rockwell-factorytalk Alarms API](https://apis.io/apis/rockwell-factorytalk/rockwell-factorytalk-alarms-api/) — Alarm and event management
+- [rockwell-factorytalk Recipes API](https://apis.io/apis/rockwell-factorytalk/rockwell-factorytalk-recipes-api/) — Recipe management
+- [rockwell-factorytalk Tags API](https://apis.io/apis/rockwell-factorytalk/rockwell-factorytalk-tags-api/) — The Tags API from rockwell-factorytalk — 3 operation(s) for tags.
+- [rockwell-factorytalk TrendData API](https://apis.io/apis/rockwell-factorytalk/rockwell-factorytalk-trenddata-api/) — Historical trend data retrieval
 
-Rockwell Automation FactoryTalk Optix REST API provides programmatic access to HMI and SCADA visualization applications, enabling external system integration, tag read/write, alarm management, and runtime control of FactoryTalk Optix applications.
+### Published properties
 
-- **Human URL:** [https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html](https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html)
-- **Base URL:** `https://api.factorytalk.example.com`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags
+#### AsyncAPI (1)
 
-- Automation
-- HMI
-- Manufacturing
-- REST
+Event-driven and webhook contracts.
 
-#### Properties
+- [Rockwell FactoryTalk Hub Real-Time Events API](https://apis.io/asyncapis/rockwell-factorytalk/rockwell-factorytalk-realtime-asyncapi/)
 
-- [Documentation](https://docs.rockwellautomation.com/en/products/software/factorytalk/factorytalk-optix.html)
-- [OpenAPI](openapi/rockwell-factorytalk-optix-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/rockwell-factorytalk-optix.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rockwell-factorytalk-optix.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Event channels (4)
 
-### Rockwell FactoryTalk Hub API
+Individual events and webhooks the provider emits.
 
-Rockwell FactoryTalk Hub provides cloud-based industrial API services for connecting FactoryTalk software applications, enabling centralized identity management, software licensing, and connected factory services.
+- [alarm/acknowledged](https://apis.io/channels/rockwell-factorytalk/alarm-acknowledged/)
+- [alarm/activated](https://apis.io/channels/rockwell-factorytalk/alarm-activated/)
+- [device/status-changed](https://apis.io/channels/rockwell-factorytalk/device-status-changed/)
+- [tag/value-changed](https://apis.io/channels/rockwell-factorytalk/tag-value-changed/)
 
-- **Human URL:** [https://www.rockwellautomation.com/en-us/products/software/factorytalk.html](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
-- **Base URL:** `https://api.factorytalk.example.com`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Automation
-- Cloud
-- Manufacturing
-- REST
+- [Rockwell Factorytalk Agentic Access](https://apis.io/agentic-access/rockwell-factorytalk/rockwell-factorytalk-agentic-access/)
 
-#### Properties
+#### JSON Schema (1)
 
-- [Documentation](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
-- [AsyncAPI](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/rockwell-factorytalk-optix.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rockwell-factorytalk-optix.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The data models the API reads and writes.
 
-### Rockwell FactoryTalk Logix Designer API
+- [Rockwell FactoryTalk Tag](https://apis.io/schemas/rockwell-factorytalk/rockwell-factorytalk-tag/)
 
-Rockwell Automation FactoryTalk Logix Designer provides programmatic access to Logix controller programming, allowing version control integration, CI/CD pipeline automation, and export of L5X controller files for PLC program management.
+#### JSON Structure (1)
 
-- **Human URL:** [https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools](https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools)
-- **Base URL:** `https://api.factorytalk.example.com`
+Data models expressed in JSON Structure.
 
-#### Tags
+- [Rockwell Factorytalk Structure](https://apis.io/json-structure/rockwell-factorytalk/rockwell-factorytalk-structure/)
 
-- Automation
-- Manufacturing
-- PLC
-- Programming
-- REST
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
-- [Documentation](https://github.com/rockwellautomation/ra-logix-designer-vcs-custom-tools)
-- [S D Ks](https://github.com/rockwellautomation/ra-logix-cicd)
-- [Postman Collection](collections/rockwell-factorytalk-optix.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/rockwell-factorytalk-optix.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Rockwell Factorytalk Context](https://apis.io/jsonld/rockwell-factorytalk/rockwell-factorytalk-context/)
 
-## Common Properties
+#### Vocabulary (1)
 
-- [Portal](https://www.rockwellautomation.com/en-us/products/software/factorytalk.html)
-- [Documentation](https://docs.rockwellautomation.com/en/products/software/factorytalk/)
+The provider's domain terms, defined.
+
+- [Rockwell FactoryTalk Vocabulary](https://apis.io/vocabularies/rockwell-factorytalk/rockwell-factorytalk-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Factorytalk List Alarms Example](https://apis.io/examples/rockwell-factorytalk/factorytalk-list-alarms-example/)
+- [Factorytalk Read Tag Values Example](https://apis.io/examples/rockwell-factorytalk/factorytalk-read-tag-values-example/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Rockwell FactoryTalk Optix REST Alarms API](https://apis.io/collections/rockwell-factorytalk/open-rockwell-factorytalk-alarms-api/)
+- [Rockwell FactoryTalk Optix REST API](https://apis.io/collections/rockwell-factorytalk/open-rockwell-factorytalk-optix/)
+- [Rockwell FactoryTalk Optix REST Alarms Recipes API](https://apis.io/collections/rockwell-factorytalk/open-rockwell-factorytalk-recipes-api/)
+- [Rockwell FactoryTalk Optix REST Alarms Tags API](https://apis.io/collections/rockwell-factorytalk/open-rockwell-factorytalk-tags-api/)
+- [Rockwell FactoryTalk Optix REST Alarms TrendData API](https://apis.io/collections/rockwell-factorytalk/open-rockwell-factorytalk-trenddata-api/)
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Rockwell FactoryTalk — asyncapi rules](https://apis.io/rules/rockwell-factorytalk/rockwell-factorytalk-asyncapi-spectral-rules/)
+- [Rockwell FactoryTalk — jsonschema rules](https://apis.io/rules/rockwell-factorytalk/rockwell-factorytalk-jsonschema-spectral-rules/)
+- [Rockwell FactoryTalk API Rules](https://apis.io/rules/rockwell-factorytalk/rockwell-factorytalk-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Rockwell Factorytalk Authentication](https://apis.io/security/rockwell-factorytalk/rockwell-factorytalk-authentication/)
+- [Rockwell Factorytalk Domain Security](https://apis.io/security/rockwell-factorytalk/rockwell-factorytalk-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Rockwell Factorytalk Scopes](https://apis.io/scopes/rockwell-factorytalk/rockwell-factorytalk-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Rockwell Factorytalk Plans Pricing](https://apis.io/plans/rockwell-factorytalk/rockwell-factorytalk-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rockwell Factorytalk Rate Limits](https://apis.io/rate-limits/rockwell-factorytalk/rockwell-factorytalk-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Rockwell Factorytalk Finops](https://apis.io/finops/rockwell-factorytalk/rockwell-factorytalk-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.rockwellautomation.com/en-us/)
+- [Documentation](https://docs.rockwellautomation.com/en/products/software/factorytalk/)
 - [Support](https://www.rockwellautomation.com/en-us/support/)
 - [Blog](https://www.rockwellautomation.com/en-us/company/news/blogs/)
-- [Privacy Policy](https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html)
-- [GitHub Organization](https://github.com/rockwellautomation)
-- [OpenAPI](openapi/rockwell-factorytalk-optix-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [AsyncAPI](asyncapi/rockwell-factorytalk-realtime-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/rockwell-factorytalk-tag-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [J S O N L D Context](json-ld/rockwell-factorytalk-context.jsonld)
-- [JSON Structure](json-structure/rockwell-factorytalk-structure.json)
-- [Vocabulary](vocabulary/rockwell-factorytalk-vocabulary.yml)
-- [Spectral Ruleset](rules/rockwell-factorytalk-rules.yml)
+- [Privacy policy](https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/privacy-and-cookies-policy.html)
+- [GitHub](https://github.com/rockwellautomation)
 
-## Maintainers
+## API Evangelist rating
 
-**Email:** kin@apievangelist.com
+**Kin Score 38.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 59.6 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 15.8 |
+
+**Agent readiness 21.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/rockwell-factorytalk/](https://apis.io/providers/rockwell-factorytalk/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Rockwell FactoryTalk: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/rockwell-factorytalk/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
